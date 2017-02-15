@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="来自南极的 Mr.Humor">
 <meta property="og:description" content="前言
 这算是博客搭建好之后的第一篇正式博文吧。我所理解的写博客的意义：加深所学知识的印象，辅助记忆。归纳总结，方便以后复习，夯实基础。一篇英文文章，如果只有个别单词不会，并不会影响阅读。但如果每个句子里都有生词，就很影响阅读了。这门语言也是一样，现在的框架层出不穷，总不能每个都学吧，先把最底层的原生的理解了、把API记熟了再说吧。加油！">
-<meta property="og:updated_time" content="2017-02-14T02:22:09.742Z">
+<meta property="og:updated_time" content="2017-02-14T05:32:48.728Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据类型">
 <meta name="twitter:description" content="前言
@@ -419,13 +419,42 @@
 <h2 id="Boolean类型"><a href="#Boolean类型" class="headerlink" title="Boolean类型"></a>Boolean类型</h2><blockquote>
 <p>boolean类型只有两个字面量值：true和false。任何数据类型的值都可以通过转型函数<code>Boolean()</code>转换为布尔值，转换规则如下：</p>
 </blockquote>
-<ul>
-<li>Boolean         true                        false</li>
-<li>number        任何非零数字值(包括无穷大)        0</li>
-<li>string        任何非空字符串                空字符串</li>
-<li>object        任何对象                        null</li>
-<li>undefined        n/a                            undefined</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>转换为true的值</th>
+<th>转换为false的值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Boolean</td>
+<td>true</td>
+<td>false    </td>
+</tr>
+<tr>
+<td>number</td>
+<td>任何非零数字值(包括无穷大)</td>
+<td>0  </td>
+</tr>
+<tr>
+<td>string</td>
+<td>任何非空字符串</td>
+<td>空字符  </td>
+</tr>
+<tr>
+<td>object</td>
+<td>任何对象</td>
+<td>null  </td>
+</tr>
+<tr>
+<td>undefined</td>
+<td>n/a</td>
+<td>undefined </td>
+</tr>
+</tbody>
+</table>
 <blockquote>
 <p>另外，在做判断的时候是会自动进行数据类型转换的，如：</p>
 </blockquote>
@@ -548,6 +577,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/02/14/面向对象之理解对象/" rel="prev" title="面向对象之理解对象">
+                面向对象之理解对象 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -634,7 +667,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -652,7 +685,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
