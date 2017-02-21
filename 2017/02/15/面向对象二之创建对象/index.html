@@ -93,7 +93,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/02/15/面向对象二之创建对象/index.html">
 <meta property="og:site_name" content="来自南极的 Mr.Humor">
 <meta property="og:description" content="摘要书中介绍了创建对象的7种模式，着重介绍前面4种，后面3种貌似不常用。前面4种模式的出场顺序都是遵循着为了解决前一种模式出现的问题而出现的。">
-<meta property="og:updated_time" content="2017-02-17T06:35:08.644Z">
+<meta property="og:updated_time" content="2017-02-21T01:41:34.040Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面向对象二之创建对象">
 <meta name="twitter:description" content="摘要书中介绍了创建对象的7种模式，着重介绍前面4种，后面3种貌似不常用。前面4种模式的出场顺序都是遵循着为了解决前一种模式出现的问题而出现的。">
@@ -407,7 +407,7 @@
 </ul>
 <h3 id="构造函数也是函数"><a href="#构造函数也是函数" class="headerlink" title="构造函数也是函数"></a>构造函数也是函数</h3><p>实际上我们可以用下面的代码来模拟这个过程，虽然我不知道它底层是不是这样实现的:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> <span class="built_in">Object</span>();</div><div class="line">Person.say(person1,<span class="string">'nikolaus'</span>,<span class="number">23</span>,<span class="string">'Frond-End'</span>);</div></pre></td></tr></table></figure></p>
 <p>关于<code>call()</code>和<code>apply()</code>，可以参见我的另一篇文章：<a href=""></a></p>
-<p>构造函数本质上还是一个函数。除了上面的那种用say来延长其作用域的用法，我们也可以直接调用，就像下面这样:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Person(<span class="string">'nikolaus'</span>,<span class="number">23</span>,<span class="string">'Frond-End'</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.name);  <span class="comment">//nikolaus</span></div></pre></td></tr></table></figure></p>
+<p>构造函数本质上还是一个函数。除了上面的那种用call来延长其作用域的用法，我们也可以直接调用，就像下面这样:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Person(<span class="string">'nikolaus'</span>,<span class="number">23</span>,<span class="string">'Frond-End'</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.name);  <span class="comment">//nikolaus</span></div></pre></td></tr></table></figure></p>
 <p>由于是在全局作用域中执行的函数。this就指向了window，这个过程就相当于为window添加了若干属性和方法。</p>
 <h3 id="构造函数模式的问题"><a href="#构造函数模式的问题" class="headerlink" title="构造函数模式的问题"></a>构造函数模式的问题</h3><blockquote>
 <p>“一切皆对象”。</p>
