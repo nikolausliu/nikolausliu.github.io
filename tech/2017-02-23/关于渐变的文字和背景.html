@@ -93,12 +93,12 @@
 <meta property="og:url" content="http://yoursite.com/tech/2017-02-23/关于渐变的文字和背景.html">
 <meta property="og:site_name" content="来自南极的 Mr.Humor">
 <meta property="og:description" content="前言以前一直不知道css3的背景渐变有什么用，感觉w3school里的示例好丑的说。最近在看animate.css发现这里的文字不但有渐变，而且颜色是随时间改变的，很有高大上的感觉（如下图）。于是就研究了一番，并用在了自己博客的logo上（PS:效果并不好，跟NexT的黑色主题不太搭）。">
-<meta property="og:image" content="http://yoursite.com/tech/2017-02-23/关于渐变的文字和背景.html/animate-css.png">
-<meta property="og:updated_time" content="2017-02-23T09:02:45.491Z">
+<meta property="og:image" content="http://oluuc63f6.bkt.clouddn.com/animate-css.png">
+<meta property="og:updated_time" content="2017-02-24T01:30:16.264Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于渐变的文字和背景">
 <meta name="twitter:description" content="前言以前一直不知道css3的背景渐变有什么用，感觉w3school里的示例好丑的说。最近在看animate.css发现这里的文字不但有渐变，而且颜色是随时间改变的，很有高大上的感觉（如下图）。于是就研究了一番，并用在了自己博客的logo上（PS:效果并不好，跟NexT的黑色主题不太搭）。">
-<meta name="twitter:image" content="http://yoursite.com/tech/2017-02-23/关于渐变的文字和背景.html/animate-css.png">
+<meta name="twitter:image" content="http://oluuc63f6.bkt.clouddn.com/animate-css.png">
 
 
 
@@ -386,7 +386,7 @@
       
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>以前一直不知道css3的背景渐变有什么用，感觉w3school里的示例好丑的说。最近在看<a href="https://daneden.github.io/animate.css/" target="_blank" rel="external">animate.css</a>发现这里的文字不但有渐变，而且颜色是随时间改变的，很有高大上的感觉（如下图）。于是就研究了一番，并用在了自己博客的logo上（PS:效果并不好，跟NexT的黑色主题不太搭）。<br><img src="/tech/2017-02-23/关于渐变的文字和背景.html/animate-css.png" alt="animate-css.png" title=""></p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>以前一直不知道css3的背景渐变有什么用，感觉w3school里的示例好丑的说。最近在看<a href="https://daneden.github.io/animate.css/" target="_blank" rel="external">animate.css</a>发现这里的文字不但有渐变，而且颜色是随时间改变的，很有高大上的感觉（如下图）。于是就研究了一番，并用在了自己博客的logo上（PS:效果并不好，跟NexT的黑色主题不太搭）。<br><img src="http://oluuc63f6.bkt.clouddn.com/animate-css.png"></p>
 <a id="more"></a>
 <h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>直接看样式代码：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*这个是上面大标题的样式*/</span></div><div class="line"><span class="selector-class">.site__title</span> &#123;</div><div class="line">    <span class="attribute">color</span>: <span class="number">#f35626</span>;</div><div class="line">    <span class="attribute">background-image</span>: <span class="built_in">-webkit-linear-gradient</span>(92deg,#f35626,#feab3a);</div><div class="line">    <span class="attribute">-webkit-background-clip</span>: text;</div><div class="line">    <span class="attribute">-webkit-text-fill-color</span>: transparent;</div><div class="line">    <span class="attribute">-webkit-animation</span>: hue <span class="number">60s</span> infinite linear;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/*这个是下面那个按钮的样式*/</span></div><div class="line"><span class="selector-class">.butt</span> &#123;</div><div class="line">    <span class="attribute">border</span>: <span class="number">2px</span> solid <span class="number">#f35626</span>;</div><div class="line">    <span class="attribute">line-height</span>: <span class="number">1.375</span>;</div><div class="line">    <span class="attribute">padding-left</span>: <span class="number">1.5rem</span>;</div><div class="line">    <span class="attribute">padding-right</span>: <span class="number">1.5rem</span>;</div><div class="line">    <span class="attribute">font-weight</span>: <span class="number">700</span>;</div><div class="line">    <span class="attribute">color</span>: <span class="number">#f35626</span>;</div><div class="line">    <span class="attribute">cursor</span>: pointer;</div><div class="line">    <span class="attribute">-webkit-animation</span>: hue <span class="number">60s</span> infinite linear;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>其实上面的样式中我一开始看到是懵逼的，因为很多都没用过，甚至是没看过的，但是不妨碍测试。就拿<code>.site__title</code>这个类来测试吧，在调试工具里单独把<code>color: #f35626;</code>勾选掉，发现没有任何变化。为什么呢？因为我现在用的是Chrome测试的，实际上起渲染作用的是下面几条带<code>-webkit-</code>前缀的css。而在IE下，即使是IE11下（亲测），带<code>-webkit-</code>前缀的css也是无法识别的，所以<code>color: #f35626;</code>只是出于兼容的考略，如果在IE下浏览，则文字只显示颜色为<code>#f35626</code>，没有渐变，也没有文字的变化。</p>
