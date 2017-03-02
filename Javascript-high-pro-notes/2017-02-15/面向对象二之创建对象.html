@@ -93,7 +93,7 @@
 <meta property="og:url" content="http://yoursite.com/Javascript-high-pro-notes/2017-02-15/面向对象二之创建对象.html">
 <meta property="og:site_name" content="来自南极的 Mr.Humor">
 <meta property="og:description" content="摘要书中介绍了创建对象的7种模式，着重介绍前面4种，后面3种貌似不常用。前面4种模式的出场顺序都是遵循着为了解决前一种模式出现的问题而出现的。">
-<meta property="og:updated_time" content="2017-03-02T02:19:07.736Z">
+<meta property="og:updated_time" content="2017-03-02T02:28:18.048Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面向对象二之创建对象">
 <meta name="twitter:description" content="摘要书中介绍了创建对象的7种模式，着重介绍前面4种，后面3种貌似不常用。前面4种模式的出场顺序都是遵循着为了解决前一种模式出现的问题而出现的。">
@@ -487,7 +487,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> friend = Person(<span class="string">'nikolaus'</span>,<span class="number">23</span>,<span class="string">'Front-End'</span>); </div><div class="line">friend.sayName(); <span class="comment">//"nikolaus"</span></div></pre></td></tr></table></figure>
 <p>这里为什么说“除了使用sayName()方法之外，没有其他办法访问name的值”呢？因为稳妥模式不允许使用this，上面代码中第9行访问name值是因为<strong>有上下文执行环境</strong>，访问的是传入函数的参数的值。如果在这个函数外部再想访问创建对象时传入函数的原始数据，由于稳妥模式不允许使用this，函数外部又<strong>没有上下文执行环境了</strong>，所以访问不到：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">friend.sayAge() = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(age);</div><div class="line">&#125;</div><div class="line">friend.sayAge();  <span class="comment">//undefined</span></div></pre></td></tr></table></figure></p>
 <p>如果你这样写，确实可以在外部访问到创建对象时传入函数的原始数据：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">friend.sayJob() = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.job);</div><div class="line">&#125;</div><div class="line">friend.sayJob();  <span class="comment">//Front-End</span></div></pre></td></tr></table></figure></p>
-<p>但是，别忘了稳妥构造函数模式的定义中是不允许使用this的！</p>
+<p>但是，别忘了稳妥构造函数模式的定义中是不允许使用this的！用了this就已经不是稳妥构造函数模式了。</p>
 <p>好了，废话有点多，这种模式应该用的也不多吧，主要是安全。</p>
 <blockquote>
 <p>稳妥构造函数模式提供的这种安全性，使得它非常适合在某些安全执行环境——例如，ADsafe（www.adsafe.org）和Caja（http:/code.google.com/p/google-caja/）提供的环境——下使用。</p>
