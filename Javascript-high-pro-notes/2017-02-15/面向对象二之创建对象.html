@@ -93,7 +93,7 @@
 <meta property="og:url" content="http://yoursite.com/Javascript-high-pro-notes/2017-02-15/面向对象二之创建对象.html">
 <meta property="og:site_name" content="来自南极的 Mr.Humor">
 <meta property="og:description" content="摘要书中介绍了创建对象的7种模式，着重介绍前面4种，后面3种貌似不常用。前面4种模式的出场顺序都是遵循着为了解决前一种模式出现的问题而出现的。">
-<meta property="og:updated_time" content="2017-03-02T02:16:42.311Z">
+<meta property="og:updated_time" content="2017-03-02T02:19:07.736Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面向对象二之创建对象">
 <meta name="twitter:description" content="摘要书中介绍了创建对象的7种模式，着重介绍前面4种，后面3种貌似不常用。前面4种模式的出场顺序都是遵循着为了解决前一种模式出现的问题而出现的。">
@@ -465,7 +465,7 @@
 <p>书中关于这段的描述，我之前一直不是很理解：</p>
 <blockquote>
 <p>可以通过检查某个应该存在的方法是否有效，来决定是否需要初始化原型。</p>
-<p>其中，if 语句检查的可以是初始化之后应该存在的任何属性或方法——不必用一大堆<br>if语句检查每个属性和每个方法；只要检查其中一个即可。</p>
+<p>其中，if 语句检查的可以是初始化之后应该存在的任何属性或方法——不必用一大堆if语句检查每个属性和每个方法；只要检查其中一个即可。</p>
 </blockquote>
 <p>在网上查了一番，<a href="https://segmentfault.com/q/1010000004546141" target="_blank" rel="external">这个答案</a>解决了我的困惑，这里不再赘述。</p>
 <p>另外需要注意的一点，if块里不能用字面量的形式来定义，原因参考我<a href="#原型的动态性">前面关于原型的动态性的描述</a>。如果非要用字面量来表示，可以像下面这样把新的对象return，参照<a href="https://www.zhihu.com/question/41441895" target="_blank" rel="external">js面向对象中的动态原型模式怎么理解? - 艾密尔的回答 - 知乎</a>，感谢！<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age,job</span>)</span>&#123;</div><div class="line">  <span class="comment">//属性</span></div><div class="line">  <span class="keyword">this</span>.name = name;</div><div class="line">  <span class="keyword">this</span>.age = age;</div><div class="line">  <span class="keyword">this</span>.job = job;</div><div class="line"></div><div class="line">  <span class="comment">//方法</span></div><div class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="keyword">this</span>.sayName != <span class="string">'function'</span>)&#123;</div><div class="line">    Person.prototype = &#123;</div><div class="line">      <span class="attr">sayName</span> : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Person(age,name,job);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
