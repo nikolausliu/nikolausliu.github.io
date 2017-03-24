@@ -106,7 +106,7 @@ call和apply">
 <meta property="og:image" content="http://oluuc63f6.bkt.clouddn.com/screenshot20170324102316.png">
 <meta property="og:image" content="http://oluuc63f6.bkt.clouddn.com/screensho20170324102336.png">
 <meta property="og:image" content="http://oluuc63f6.bkt.clouddn.com/screensho20170324102358.png">
-<meta property="og:updated_time" content="2017-03-24T06:51:53.775Z">
+<meta property="og:updated_time" content="2017-03-24T07:01:52.985Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="类数组对象转数组">
 <meta name="twitter:description" content="引言ES中有的对象长得很像数组，却又不是数组，比如函数中的arguments对象。如果我们想把这类对象转换为数组对象，就要用到我们今天要说的方法了。但是在这之前，需要先弄清楚几个概念：
@@ -464,6 +464,9 @@ call和apply">
 <p>上面的例子中声明了一个类数组对象，用toArr转换后打印的结果就是我们预期中的数组。</p>
 <p>需要特别注意的一点是：类数组对象必须包含length属性和正确的length属性值。如果不包含length属性，则这个对象会被转换为一个空数组；如果length属性的值不正确，则转换的结果会根据length值增加或删除数组的项。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arrlike2 = &#123;</div><div class="line">    <span class="number">0</span>:<span class="number">1</span>,</div><div class="line">    <span class="number">1</span>:<span class="number">2</span></div><div class="line">&#125;;</div><div class="line"><span class="keyword">var</span> arrlike3 = &#123;</div><div class="line">    <span class="number">0</span>:<span class="number">1</span>,</div><div class="line">    <span class="number">1</span>,<span class="number">2</span>,</div><div class="line">    <span class="attr">length</span>: <span class="number">1</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> arrlike4 = &#123;</div><div class="line">    <span class="number">0</span>:<span class="number">1</span>,</div><div class="line">    <span class="number">1</span>,<span class="number">2</span>,</div><div class="line">    <span class="attr">length</span>: <span class="number">3</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">toArr(arrlike2);    <span class="comment">// []</span></div><div class="line">toArr(arrlike3);    <span class="comment">// [1]</span></div><div class="line">toArr(arrlike4);    <span class="comment">// [1,2,undefined]</span></div></pre></td></tr></table></figure>
+<p>另外，把nodelist对象转换为数组的姿势是这样的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> list = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'li'</span>);</div><div class="line"><span class="keyword">var</span> arr = toArr(list);</div></pre></td></tr></table></figure>
+<p>好了，就酱。</p>
 <!-- more -->
 
 
