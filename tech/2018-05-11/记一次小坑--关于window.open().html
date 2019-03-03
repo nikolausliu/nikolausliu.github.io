@@ -87,18 +87,18 @@
 
 
 
-<meta name="description" content="今天在公司的后台项目中遇到一个这样的需求：点击一个按钮，发送一个请求，然后用请求到的data中的url打开一个新窗口（跳转到另一个后台）。看起来应该没什么问题，很快代码写好了（vue项目，以下是伪代码，主要表达下思路）： 1234567891011clickHandle() &amp;#123;  api.get(&apos;xxx&apos;, params).then(response =&amp;gt; &amp;#123;    l">
+<meta name="description" content="今天在公司的后台项目中遇到一个这样的需求：点击一个按钮，发送一个请求，然后用请求到的data中的url打开一个新窗口（跳转到另一个后台）。看起来应该没什么问题，很快代码写好了（vue项目，以下是伪代码，主要表达下思路）：">
 <meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记一次小坑--关于window.open()">
 <meta property="og:url" content="http://yoursite.com/tech/2018-05-11/记一次小坑--关于window.open().html">
 <meta property="og:site_name" content="NIKO&#39;S BLOG">
-<meta property="og:description" content="今天在公司的后台项目中遇到一个这样的需求：点击一个按钮，发送一个请求，然后用请求到的data中的url打开一个新窗口（跳转到另一个后台）。看起来应该没什么问题，很快代码写好了（vue项目，以下是伪代码，主要表达下思路）： 1234567891011clickHandle() &amp;#123;  api.get(&apos;xxx&apos;, params).then(response =&amp;gt; &amp;#123;    l">
+<meta property="og:description" content="今天在公司的后台项目中遇到一个这样的需求：点击一个按钮，发送一个请求，然后用请求到的data中的url打开一个新窗口（跳转到另一个后台）。看起来应该没什么问题，很快代码写好了（vue项目，以下是伪代码，主要表达下思路）：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-19T13:46:50.998Z">
+<meta property="og:updated_time" content="2019-03-03T10:38:14.959Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次小坑--关于window.open()">
-<meta name="twitter:description" content="今天在公司的后台项目中遇到一个这样的需求：点击一个按钮，发送一个请求，然后用请求到的data中的url打开一个新窗口（跳转到另一个后台）。看起来应该没什么问题，很快代码写好了（vue项目，以下是伪代码，主要表达下思路）： 1234567891011clickHandle() &amp;#123;  api.get(&apos;xxx&apos;, params).then(response =&amp;gt; &amp;#123;    l">
+<meta name="twitter:description" content="今天在公司的后台项目中遇到一个这样的需求：点击一个按钮，发送一个请求，然后用请求到的data中的url打开一个新窗口（跳转到另一个后台）。看起来应该没什么问题，很快代码写好了（vue项目，以下是伪代码，主要表达下思路）：">
 
 
 
@@ -387,6 +387,7 @@
 
       
         <p>今天在公司的后台项目中遇到一个这样的需求：点击一个按钮，发送一个请求，然后用请求到的<code>data</code>中的<code>url</code>打开一个新窗口（跳转到另一个后台）。看起来应该没什么问题，很快代码写好了（vue项目，以下是伪代码，主要表达下思路）：</p>
+<a id="more"></a>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">clickHandle() &#123;</span><br><span class="line">  api.get(<span class="string">'xxx'</span>, params).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> data = response.data;</span><br><span class="line">    <span class="keyword">if</span>(data.code === <span class="number">0</span> ) &#123;</span><br><span class="line">      <span class="keyword">let</span> url = data.data.url || <span class="string">''</span>;</span><br><span class="line">      <span class="keyword">if</span> (url) &#123;</span><br><span class="line">        <span class="built_in">window</span>.open(url);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>愉快地测试下，发现并没有弹出新窗口，短促的慌乱之后，发现是浏览器拦截了新窗口的打开。。。</p>
 <p>搜索引擎告诉我，<strong>非用户行为导致的打开新窗口可能会被部分浏览器拦截</strong>（在谷歌浏览器中，它的表现形式是在地址栏的末尾有一个通知图标，点击通知可以选择允许还是继续拦截）。搜索引擎还说，可以用手动触发dom事件的方式模拟用户行为，避开浏览器的拦截。</p>
