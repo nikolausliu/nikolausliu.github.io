@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="javascript,">
+  <meta name="keywords" content="javascript,算法,">
 
 
 
@@ -87,18 +87,18 @@
 
 
 
-<meta name="description" content="今天在公司的后台项目中遇到一个这样的需求：点击一个按钮，发送一个请求，然后用请求到的data中的url打开一个新窗口（跳转到另一个后台）。看起来应该没什么问题，很快代码写好了（vue项目，以下是伪代码，主要表达下思路）：">
-<meta name="keywords" content="javascript">
+<meta name="description" content="今天记录下数组去重的几种方法，主要是思路。自觉在算法和数据结构方面比较薄弱，以后要注意这方面的学习。">
+<meta name="keywords" content="javascript,算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="记一次小坑--关于window.open()">
-<meta property="og:url" content="http://yoursite.com/tech/2018-05-11/记一次小坑--关于window.open().html">
+<meta property="og:title" content="数组去重的几种方法">
+<meta property="og:url" content="http://yoursite.com/tech/2018-07-03/数组去重的几种方法.html">
 <meta property="og:site_name" content="NIKO&#39;S BLOG">
-<meta property="og:description" content="今天在公司的后台项目中遇到一个这样的需求：点击一个按钮，发送一个请求，然后用请求到的data中的url打开一个新窗口（跳转到另一个后台）。看起来应该没什么问题，很快代码写好了（vue项目，以下是伪代码，主要表达下思路）：">
+<meta property="og:description" content="今天记录下数组去重的几种方法，主要是思路。自觉在算法和数据结构方面比较薄弱，以后要注意这方面的学习。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-03T10:38:14.959Z">
+<meta property="og:updated_time" content="2019-03-26T12:56:59.239Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="记一次小坑--关于window.open()">
-<meta name="twitter:description" content="今天在公司的后台项目中遇到一个这样的需求：点击一个按钮，发送一个请求，然后用请求到的data中的url打开一个新窗口（跳转到另一个后台）。看起来应该没什么问题，很快代码写好了（vue项目，以下是伪代码，主要表达下思路）：">
+<meta name="twitter:title" content="数组去重的几种方法">
+<meta name="twitter:description" content="今天记录下数组去重的几种方法，主要是思路。自觉在算法和数据结构方面比较薄弱，以后要注意这方面的学习。">
 
 
 
@@ -126,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tech/2018-05-11/记一次小坑--关于window.open().html">
+  <link rel="canonical" href="http://yoursite.com/tech/2018-07-03/数组去重的几种方法.html">
 
 
 
 
 
-  <title> 记一次小坑--关于window.open() | NIKO'S BLOG </title>
+  <title> 数组去重的几种方法 | NIKO'S BLOG </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -279,7 +279,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/tech/2018-05-11/记一次小坑--关于window.open().html">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/tech/2018-07-03/数组去重的几种方法.html">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Nikolaus Liu">
@@ -303,7 +303,7 @@
             
             
               
-                记一次小坑--关于window.open()
+                数组去重的几种方法
               
             
           </h1>
@@ -318,8 +318,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-11T15:14:23+08:00">
-                2018-05-11
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-03T20:28:32+08:00">
+                2018-07-03
               </time>
             
 
@@ -359,8 +359,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/tech/2018-05-11/记一次小坑--关于window.open().html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="tech/2018-05-11/记一次小坑--关于window.open().html" itemprop="commentCount"></span>
+                <a href="/tech/2018-07-03/数组去重的几种方法.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="tech/2018-07-03/数组去重的几种方法.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -386,24 +386,17 @@
       
 
       
-        <p>今天在公司的后台项目中遇到一个这样的需求：点击一个按钮，发送一个请求，然后用请求到的<code>data</code>中的<code>url</code>打开一个新窗口（跳转到另一个后台）。看起来应该没什么问题，很快代码写好了（vue项目，以下是伪代码，主要表达下思路）：</p>
-<a id="more"></a>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">clickHandle() &#123;</span><br><span class="line">  api.get(<span class="string">'xxx'</span>, params).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> data = response.data;</span><br><span class="line">    <span class="keyword">if</span>(data.code === <span class="number">0</span> ) &#123;</span><br><span class="line">      <span class="keyword">let</span> url = data.data.url || <span class="string">''</span>;</span><br><span class="line">      <span class="keyword">if</span> (url) &#123;</span><br><span class="line">        <span class="built_in">window</span>.open(url);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>愉快地测试下，发现并没有弹出新窗口，短促的慌乱之后，发现是浏览器拦截了新窗口的打开。。。</p>
-<p>搜索引擎告诉我，<strong>非用户行为导致的打开新窗口可能会被部分浏览器拦截</strong>（在谷歌浏览器中，它的表现形式是在地址栏的末尾有一个通知图标，点击通知可以选择允许还是继续拦截）。搜索引擎还说，可以用手动触发dom事件的方式模拟用户行为，避开浏览器的拦截。</p>
-<p>有了上面的思路，我把伪代码修改如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">clickHandle() &#123;</span><br><span class="line">  api.get(<span class="string">'xxx'</span>, params).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> data = response.data;</span><br><span class="line">    <span class="keyword">if</span>(data.code === <span class="number">0</span> ) &#123;</span><br><span class="line">      <span class="keyword">let</span> url = data.data.url || <span class="string">''</span>;</span><br><span class="line">      <span class="keyword">if</span> (url) &#123;</span><br><span class="line">        <span class="comment">// window.open(url);</span></span><br><span class="line">        <span class="comment">// 在dom中添加a标签-注册点击事件打开新窗口-触发点击事件-从dom中移除a标签</span></span><br><span class="line">        <span class="keyword">let</span> a = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>);</span><br><span class="line">        a.id = <span class="string">'temp'</span>;</span><br><span class="line">        <span class="built_in">document</span>.body.appendChild(a);</span><br><span class="line">        a.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">          <span class="built_in">window</span>.open(url);</span><br><span class="line">        &#125;);</span><br><span class="line">        a.click();</span><br><span class="line">        <span class="built_in">document</span>.body.removeChild(a);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>很好，再次愉快地测试下，然而，浏览器还是拦截了。。。</p>
-<p><del>笑容逐渐淫荡。</del>笑容逐渐凝固。摔。</p>
-<p>搜索引擎再次告诉我，<strong>只要是在异步回调里执行的<code>window.open()</code>都会被拦截</strong>。</p>
-<p>好，整理下思路：这次我们不在异步回调里<code>window.open()</code>了。点击按钮先打开新窗口，把新窗口的引用保存在<code>data</code>里。请求拿到<code>url</code>后，把<code>url</code>也保存在<code>data</code>里。然后我们<code>watch</code>一下<code>url</code>,<code>url</code>有值了，就把新窗口的引用重定向。让我们祈祷这次别出什么幺蛾子。代码修改如下：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      url: <span class="string">''</span>,</span><br><span class="line">      newWin: <span class="literal">null</span>  <span class="comment">// 新窗口的引用</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  watch: &#123;</span><br><span class="line">    url(newVal, oldVal) &#123;</span><br><span class="line">      <span class="keyword">if</span>(newVal &amp;&amp; <span class="keyword">this</span>.newWin) &#123;</span><br><span class="line">        <span class="keyword">this</span>.newWin.location.href = newVal;</span><br><span class="line">        <span class="comment">// 重定向后把url和newWin重置</span></span><br><span class="line">        <span class="keyword">this</span>.url = <span class="string">''</span>;</span><br><span class="line">        <span class="keyword">this</span>.newWin = <span class="literal">null</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    clickHandle() &#123;</span><br><span class="line">      <span class="keyword">let</span> _this = <span class="keyword">this</span>;</span><br><span class="line">      <span class="comment">// 先打开一个空的新窗口，再请求</span></span><br><span class="line">      <span class="built_in">window</span>.open();</span><br><span class="line">      api.get(<span class="string">'xxx'</span>, params).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> data = response.data;</span><br><span class="line">        <span class="keyword">if</span>(data.code === <span class="number">0</span> ) &#123;</span><br><span class="line">          _this.url = data.data.url || <span class="string">''</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>谨慎地测试一下，这次它打开了，它真的打开了。不能说很高兴吧，一般高兴。</p>
-<p>然而下一秒，我发现我高兴早了：窗口是打开了，可是新窗口中的页面一直在加载动画的状态。我以前觉得这个加载动画挺好看的，就是一个缺了一块扇形的大圆不断地吃着一个个排成一线的小圆的动画，现在我觉得它吃的好像有点多了。</p>
-<p><del>笑容逐渐变态。</del>算了，不笑了。</p>
-<p>这次没用搜索引擎，发现上面那个问题，是因为<strong>打开的新窗口会保留旧窗口的sessionStorage</strong>(至于为什么sessionStorage会阻止我那个新页面的加载就不在这篇文章的讨论范围之内了）。知道原因后，解决方法就简单了，在重定向之前，把新窗口的sessionStorage清空就好了。也就是在上面代码的这行代码<code>this.newWin.location.href = newVal;</code>之前加上一行<code>this.newWin.sessionStorage.clear()</code>就好了。代码就不放了。</p>
-<p>这一次的测试没出什么问题。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>浏览器会拦截新窗口的打开也是为了保护用户体验，可以屏蔽一些广告。需要注意的是新窗口的引用<code>newWin</code>其实就是一个新的<code>window</code>对象,自然能使用上面的清除<code>sessionStorage</code>的方法。更多的关于<code>window</code>对象的知识，像是新窗口与打开它的窗口之间的通信等，可以在《Javascript高级程序设计》的第8章第1节中查阅学习。</p>
+        <p>今天记录下数组去重的几种方法，主要是思路。自觉在算法和数据结构方面比较薄弱，以后要注意这方面的学习。<br><a id="more"></a></p>
+<h1 id="1-利用ES6的Set"><a href="#1-利用ES6的Set" class="headerlink" title="1. 利用ES6的Set"></a>1. 利用ES6的Set</h1><p>ES6提供了一种新的数据结构Set,这种数据结构类似于数组，但是成员的值都是唯一的，不管是基本类型的值还是引用类型的值。学习更多关于Set的知识可以参考<a href="http://es6.ruanyifeng.com/#docs/set-map" target="_blank" rel="noopener">ECMAScript6入门一书</a>。</p>
+<p>Set是一个构造函数，它可以接受一个数组作为参数，返回的Set实例对象的成员都是唯一的。利用<code>Array.from()</code>方法我们可以把Set对象转换为数组。所以通过Set这个“中转站”我们就达到了数组去重的目的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Set</span>(arr))  <span class="comment">// [1, 2, 3]</span></span><br></pre></td></tr></table></figure>
+<h1 id="2-使用includes或indexOf"><a href="#2-使用includes或indexOf" class="headerlink" title="2. 使用includes或indexOf"></a>2. 使用includes或indexOf</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> res = []</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (arr.length) &#123;</span><br><span class="line">    <span class="keyword">var</span> item = arr.shift()</span><br><span class="line">    <span class="comment">// if (arr.indexOf(item) === -1) &#123;</span></span><br><span class="line">    <span class="keyword">if</span> (!arr.includes(item)) &#123;</span><br><span class="line">      res.push(item)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(res)</span><br><span class="line">  <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">unique(arr) <span class="comment">// [1, 2, 3]</span></span><br></pre></td></tr></table></figure>
+<p>上面的代码先声明一个空数组作为最终要返回的结果数组，然后从数组头部遍历数组，判断当前遍历的项，如果结果数组中不存在该项，则push进结果数组，否则继续遍历。</p>
+<h1 id="3-使用双层for循环嵌套，相同项删除"><a href="#3-使用双层for循环嵌套，相同项删除" class="headerlink" title="3. 使用双层for循环嵌套，相同项删除"></a>3. 使用双层for循环嵌套，相同项删除</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> array = [...arr]</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> j = i + <span class="number">1</span>; j &lt; array.length; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (array[i] === array[j]) &#123;</span><br><span class="line">        array.splice(j, <span class="number">1</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(array)</span><br><span class="line">  <span class="keyword">return</span> array</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">unique(arr)  <span class="comment">// [1, 2, 3]</span></span><br></pre></td></tr></table></figure>
+<p>这种方法的思路也是比较清晰的，两层for循环，判断两次for循环中当前遍历的项是否相等，如果相等，则用splice方法删除内层for循环的当前项。需要注意的几点是：(1)内层for循环的起始索引应该使用外层索引+1，因为相同的项不需要比较。(2)这里使用全等操作符<code>===</code>来判断来个数组项是否重复是不够严谨的，首先<code>NaN === NaN</code>返回的是false，判断NaN应该用<code>isNaN()</code>方法；其次对象是否重复也要看具体要求，是要求对象的引用地址一致才算相同，还是说只要对象的属性一致就算相同要具体需求具体分析。在这里只是记录一下思路，就不做多余的判断了。(3)splice方法会修改原数组，所以最好像上面代码那样把输入函数的数组参数做一次拷贝。</p>
+<h1 id="4-先排序然后相邻项比较"><a href="#4-先排序然后相邻项比较" class="headerlink" title="4. 先排序然后相邻项比较"></a>4. 先排序然后相邻项比较</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> array = [...arr].sort()</span><br><span class="line">  <span class="keyword">var</span> res = [array[<span class="number">0</span>]]</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (array[i] !== array[i - <span class="number">1</span>]) &#123;</span><br><span class="line">      res.push(array[i])</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(res)</span><br><span class="line">  <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">unique(arr)  <span class="comment">// [1, 2, 3]</span></span><br></pre></td></tr></table></figure>
+<p>这种方法的思路是先把原数组排序，排序后的数组，如果有重复项，那么重复项之间一定是相邻的，此时再遍历数组，只需要比较相邻项，相邻项不相同就把当前项push进预先定义的结果数组中，最后返回结果数组。</p>
+<p>这里需要注意的是要比较的相邻项应该是<code>array[i]</code>和<code>array[i - 1]</code>而不是<code>array[i]</code>和<code>array[i + 1]</code>，因为<code>array[i + 1]</code>已经超出数组的length范围了。相应的，遍历的起始索引也要从1开始，而不能从0开始，因为从0开始<code>i - 1</code>就小于0了。还没完，起始索引从1开始，就意味着push这个动作也是从1开始的，所以要在遍历之前结果数组的初始化就应该包含数组索引0的项。</p>
 
 
         <p></p>
@@ -438,6 +431,8 @@
           
             <a href="/tags/javascript/" rel="tag"># javascript</a>
           
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
         </div>
       
 
@@ -449,8 +444,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/tech/2017-10-04/用canvas做一个简易取色器.html" rel="next" title="用canvas做一个简易取色器">
-                <i class="fa fa-chevron-left"></i> 用canvas做一个简易取色器
+              <a href="/tech/2018-06-11/关于深拷贝.html" rel="next" title="关于深拷贝">
+                <i class="fa fa-chevron-left"></i> 关于深拷贝
               </a>
             
           </div>
@@ -459,8 +454,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/tech/2018-06-11/关于深拷贝.html" rel="prev" title="关于深拷贝">
-                关于深拷贝 <i class="fa fa-chevron-right"></i>
+              <a href="/tech/2018-08-15/浅谈this、call、apply和bind.html" rel="prev" title="浅谈this、call、apply和bind">
+                浅谈this、call、apply和bind <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -515,7 +510,7 @@
   <div class="comments" id="comments">
     
       <!-- 多说评论框 start -->
-        <div class="ds-thread" data-thread-key="tech/2018-05-11/记一次小坑--关于window.open().html" data-title="记一次小坑--关于window.open()" data-url="http://yoursite.com/tech/2018-05-11/记一次小坑--关于window.open().html"></div>
+        <div class="ds-thread" data-thread-key="tech/2018-07-03/数组去重的几种方法.html" data-title="数组去重的几种方法" data-url="http://yoursite.com/tech/2018-07-03/数组去重的几种方法.html"></div>
       <!-- 多说评论框 end -->
       <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
       <script type="text/javascript">
@@ -638,7 +633,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-利用ES6的Set"><span class="nav-number">1.</span> <span class="nav-text">1. 利用ES6的Set</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-使用includes或indexOf"><span class="nav-number">2.</span> <span class="nav-text">2. 使用includes或indexOf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-使用双层for循环嵌套，相同项删除"><span class="nav-number">3.</span> <span class="nav-text">3. 使用双层for循环嵌套，相同项删除</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-先排序然后相邻项比较"><span class="nav-number">4.</span> <span class="nav-text">4. 先排序然后相邻项比较</span></a></li></ol></div>
             
 
           </div>

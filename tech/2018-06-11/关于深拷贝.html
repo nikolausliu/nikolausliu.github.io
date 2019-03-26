@@ -96,7 +96,7 @@
 <meta property="og:description" content="深拷贝是时常被提到的一个概念，今天来聊一聊深拷贝。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/d7f38664ly1g0r2azkelvj20cd01ha9x.jpg">
-<meta property="og:updated_time" content="2019-03-04T14:22:22.011Z">
+<meta property="og:updated_time" content="2019-03-05T13:54:06.793Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于深拷贝">
 <meta name="twitter:description" content="深拷贝是时常被提到的一个概念，今天来聊一聊深拷贝。">
@@ -394,7 +394,7 @@
 <p>当从一个变量向另一个变量复制引用类型的值时，同样也会将存储在变量对象中的值复制一份放到为新变量分配的空间中。不同的是，这个值的副本实际上是一个指针，而这个指针指向存储在堆中的一个对象。复制操作结束后，两个变量实际上将引用同一个对象。</p>
 </blockquote>
 <p>上面这段话引用自《JavaScript高级程序设计 第三版》，这句话实际上解释了什么是<strong>浅复制</strong>。当我们把一个对象a赋值给一个变量b时，这时a和b实际指向的是一个对象。理解了浅复制，那么<strong>深复制</strong>的含义就很好理解了。</p>
-<h1 id="深拷贝的几种实现方法"><a href="#深拷贝的几种实现方法" class="headerlink" title="深拷贝的几种实现方法"></a>深拷贝的几种实现方法</h1><h2 id="1-使用JSON序列化操作实现深拷贝"><a href="#1-使用JSON序列化操作实现深拷贝" class="headerlink" title="1. 使用JSON序列化操作实现深拷贝"></a>1. 使用JSON序列化操作实现深拷贝</h2><p>我们知道，JSON对象提供了两个静态方法。其中<code>JSON.parse()</code>用来把JSON字符串转换为对象，而<code>JSON.stringify()</code>则是把对象转换为JSON字符串，正好是一堆互逆的操作。利用这两个方法，我们就可以实现深拷贝。</p>
+<h1 id="深拷贝的几种实现方法"><a href="#深拷贝的几种实现方法" class="headerlink" title="深拷贝的几种实现方法"></a>深拷贝的几种实现方法</h1><h2 id="1-使用JSON序列化操作实现深拷贝"><a href="#1-使用JSON序列化操作实现深拷贝" class="headerlink" title="1. 使用JSON序列化操作实现深拷贝"></a>1. 使用JSON序列化操作实现深拷贝</h2><p>我们知道，JSON对象提供了两个静态方法。其中<code>JSON.parse()</code>用来把JSON字符串转换为对象，而<code>JSON.stringify()</code>则是把对象转换为JSON字符串，正好是一对互逆的操作。利用这两个方法，我们就可以实现深拷贝。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepClone</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.strigify(obj))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">arr</span>: [<span class="number">1</span>, <span class="number">2</span>], <span class="attr">person</span>: &#123;<span class="attr">name</span>: <span class="string">'Jan'</span>&#125;</span><br><span class="line">deepClone(obj&#125;) <span class="comment">// &#123;arr: [1, 2], person: &#123;name: 'Jan'&#125;</span></span><br></pre></td></tr></table></figure>
 <p>通过上面的代码我们知道了<code>JSON.parse(JSON.strigify(obj))</code>这么简单的一句代码即可实现对象的深拷贝。但是这种方法是有缺陷的，当对象的属性值为一个函数或<code>undefined</code>时，<code>JSON.stringify()</code>会忽略这个属性。</p>
 <p><img src="http://ww1.sinaimg.cn/large/d7f38664ly1g0r2azkelvj20cd01ha9x.jpg" alt="function和undefined会被忽略"></p>
@@ -454,8 +454,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/tech/2018-06-03/数组去重的几种方法.html" rel="next" title="数组去重的几种方法">
-                <i class="fa fa-chevron-left"></i> 数组去重的几种方法
+              <a href="/tech/2018-05-11/记一次小坑--关于window.open().html" rel="next" title="记一次小坑--关于window.open()">
+                <i class="fa fa-chevron-left"></i> 记一次小坑--关于window.open()
               </a>
             
           </div>
@@ -464,8 +464,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/tech/2018-06-23/事件流与事件委托.html" rel="prev" title="事件流与事件委托">
-                事件流与事件委托 <i class="fa fa-chevron-right"></i>
+              <a href="/tech/2018-07-03/数组去重的几种方法.html" rel="prev" title="数组去重的几种方法">
+                数组去重的几种方法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -579,7 +579,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -597,7 +597,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
