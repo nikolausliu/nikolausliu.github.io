@@ -1,6 +1,6 @@
 ---
 title: 浅谈this、call、apply和bind
-date: 2018-05-27 21:24:56
+date: 2018-08-15 21:24:56
 tags: 
 - javascript
 - this
