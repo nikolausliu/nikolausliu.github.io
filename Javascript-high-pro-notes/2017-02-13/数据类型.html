@@ -1,0 +1,939 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="javascript,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="前言 这算是博客搭建好之后的第一篇正式博文吧。我所理解的写博客的意义：加深所学知识的印象，辅助记忆。归纳总结，方便以后复习，夯实基础。一篇英文文章，如果只有个别单词不会，并不会影响阅读。但如果每个句子里都有生词，就很影响阅读了。这门语言也是一样，现在的框架层出不穷，总不能每个都学吧，先把最底层的原生的理解了、把API记熟了再说吧。这个系列将用来记录我对《Javascript高级程序设计（第3版）》">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据类型">
+<meta property="og:url" content="http://yoursite.com/Javascript-high-pro-notes/2017-02-13/数据类型.html">
+<meta property="og:site_name" content="NIKO&#39;S BLOG">
+<meta property="og:description" content="前言 这算是博客搭建好之后的第一篇正式博文吧。我所理解的写博客的意义：加深所学知识的印象，辅助记忆。归纳总结，方便以后复习，夯实基础。一篇英文文章，如果只有个别单词不会，并不会影响阅读。但如果每个句子里都有生词，就很影响阅读了。这门语言也是一样，现在的框架层出不穷，总不能每个都学吧，先把最底层的原生的理解了、把API记熟了再说吧。这个系列将用来记录我对《Javascript高级程序设计（第3版）》">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-04-09T09:05:05.052Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据类型">
+<meta name="twitter:description" content="前言 这算是博客搭建好之后的第一篇正式博文吧。我所理解的写博客的意义：加深所学知识的印象，辅助记忆。归纳总结，方便以后复习，夯实基础。一篇英文文章，如果只有个别单词不会，并不会影响阅读。但如果每个句子里都有生词，就很影响阅读了。这门语言也是一样，现在的框架层出不穷，总不能每个都学吧，先把最底层的原生的理解了、把API记熟了再说吧。这个系列将用来记录我对《Javascript高级程序设计（第3版）》">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Javascript-high-pro-notes/2017-02-13/数据类型.html">
+
+
+
+
+
+  <title> 数据类型 | NIKO'S BLOG </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">NIKO'S BLOG</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-laboratory">
+          <a href="/laboratory" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-dashboard"></i> <br>
+            
+            实验室
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/Javascript-high-pro-notes/2017-02-13/数据类型.html">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Nikolaus Liu">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="NIKO'S BLOG">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="NIKO'S BLOG" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据类型
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-13T15:51:59+08:00">
+                2017-02-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Javascript-high-pro-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript高程笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Javascript-high-pro-notes/2017-02-13/数据类型.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="Javascript-high-pro-notes/2017-02-13/数据类型.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>这算是博客搭建好之后的第一篇正式博文吧。我所理解的写博客的意义：加深所学知识的印象，辅助记忆。归纳总结，方便以后复习，夯实基础。一篇英文文章，如果只有个别单词不会，并不会影响阅读。但如果每个句子里都有生词，就很影响阅读了。这门语言也是一样，现在的框架层出不穷，总不能每个都学吧，先把最底层的原生的理解了、把API记熟了再说吧。这个系列将用来记录我对<a href="http://pan.baidu.com/s/1c2tbgXE" target="_blank" rel="noopener">《Javascript高级程序设计（第3版）》</a>的总结。加油！</p>
+</blockquote>
+<hr>
+<a id="more"></a>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><blockquote>
+<p>javascript中共有5种简单数据类型：<code>undefined</code>、<code>null</code>、<code>boolean</code>、<code>number</code>、<code>string</code>,和一种复杂数据类型：<code>object</code>。</p>
+</blockquote>
+<h2 id="typeof操作符"><a href="#typeof操作符" class="headerlink" title="typeof操作符"></a>typeof操作符</h2><blockquote>
+<p><code>typeof</code>操作符用来检测给定变量的数据类型，其值有6种可能的结果：</p>
+</blockquote>
+<ul>
+<li>“undefined”–如果这个值未定义</li>
+<li>“boolean”–如果这个值是布尔值</li>
+<li>“number”–如果这个值是数值</li>
+<li>“string”–如果这个值是字符串</li>
+<li>“object”–如果这个值是对象或null</li>
+<li>“function”–如果这个值是函数</li>
+</ul>
+<blockquote>
+<p>注意：<code>typeof</code>操作符返回的结果与数据类型并不是一一对应的。返回结果中，没有<code>null</code>,<code>typeof null</code>返回的是<code>object</code>。因为<code>null</code>是一个空的对象引用，当确定一个变量将用于储存对象时，最好在初始化时为其赋值<code>null</code>。另外,从技术角度讲，函数在ECMAScript中是对象，不是一种数据类型。然而，函数也确实有一些特殊的属性，因此通过<code>typeof</code>操作符来区分函数和其他对象是有必要的。</p>
+</blockquote>
+<h2 id="Undefined类型"><a href="#Undefined类型" class="headerlink" title="Undefined类型"></a>Undefined类型</h2><blockquote>
+<p>undefined类型只有一个特殊的值：undefined,有两种情况会导致一个变量的值为undefind:</p>
+</blockquote>
+<ul>
+<li>变量声明过但未赋值，如：<code>var str;</code>。</li>
+<li>变量未声明且未赋值(我们简称未声明吧)。</li>
+</ul>
+<blockquote>
+<p>实际上对于未声明过的变量，只能对其执行<code>typeof</code>检测操作，其他的操作都会报错。但是对这两种情况的未定义变量执行<code>typeof</code>操作都会返回undefined</p>
+</blockquote>
+<h2 id="Null类型"><a href="#Null类型" class="headerlink" title="Null类型"></a>Null类型</h2><blockquote>
+<p>null类型是第二个只有一个值的数据类型，其值为null，表示一个空的对象指针。有两点注意下就好:</p>
+</blockquote>
+<ul>
+<li>上面已经说过，当确定一个变量将用于储存对象时，最好在初始化时为其赋值<code>null</code>.</li>
+<li><code>null == undefined</code>返回<code>true</code>，尽管它们的用法完全不同.</li>
+</ul>
+<h2 id="Boolean类型"><a href="#Boolean类型" class="headerlink" title="Boolean类型"></a>Boolean类型</h2><blockquote>
+<p>boolean类型只有两个字面量值：true和false。任何数据类型的值都可以通过转型函数<code>Boolean()</code>转换为布尔值，转换规则如下：</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>转换为true的值</th>
+<th>转换为false的值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Boolean</td>
+<td>true</td>
+<td>false    </td>
+</tr>
+<tr>
+<td>number</td>
+<td>任何非零数字值(包括无穷大)</td>
+<td>0  </td>
+</tr>
+<tr>
+<td>string</td>
+<td>任何非空字符串</td>
+<td>空字符  </td>
+</tr>
+<tr>
+<td>object</td>
+<td>任何对象</td>
+<td>null  </td>
+</tr>
+<tr>
+<td>undefined</td>
+<td>n/a</td>
+<td>undefined </td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>另外，在做判断的时候是会自动进行数据类型转换的，如：</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> message = <span class="string">'hello world'</span>;</span><br><span class="line"><span class="keyword">if</span>(message)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'value is true'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Number类型"><a href="#Number类型" class="headerlink" title="Number类型"></a>Number类型</h2><blockquote>
+<p>number类型的内容比较多，挑两块比较重要的记录吧，其它的感觉不怎么用，而且记忆负担很重。</p>
+</blockquote>
+<h3 id="NaN"><a href="#NaN" class="headerlink" title="NaN"></a>NaN</h3><blockquote>
+<p><code>NaN</code>表示非数值(not a number)，有两点需要注意：</p>
+</blockquote>
+<ul>
+<li>任何涉及<code>NaN</code>的运算，其返回结果都为<code>NaN</code>.</li>
+<li><code>NaN</code>与任何值都不相等，包括它自己.<code>NaN == NaN  //false</code></li>
+</ul>
+<blockquote>
+<p><code>isNaN()</code>函数接收一个参数，该参数可以是任何数据类型，函数会帮助我们确定这个参数是不是”不是数值”。该函数在接收到参数后会尝试把它转换为数值。如果不能转换为数值，说明它”不是数值”，返回true;如果能转换为数值，说明它不是”不是数值”，返回false。</p>
+<p><code>isNaN()</code>也适用于对象。当传入一个对象时，会先调用这个对象的<code>valueof()</code>方法，然后确定该方法返回的值能否被转换为数值；如果不能，则再调用对象的<code>toString()</code>方法，然后确定方法返回的值能否被转换为数值。</p>
+</blockquote>
+<h3 id="数值转换"><a href="#数值转换" class="headerlink" title="数值转换"></a>数值转换</h3><blockquote>
+<p>有3个函数可以把其他类型的值转换为数值：<code>Number()</code>、<code>parseInt()</code>、<code>parseFloat()</code>。第一个函数即转型函数可以接收任何数据类型，后两个函数主要负责把字符串转换为数值。</p>
+</blockquote>
+<h4 id="Number"><a href="#Number" class="headerlink" title="Number()"></a>Number()</h4><ul>
+<li>如果是Boolean值，true转换为1，false转换为0.</li>
+<li>如果是number值，只是简单的传入和返回.</li>
+<li>如果是null,返回0.</li>
+<li>如果是undefined,返回NaN.</li>
+<li>如果是字符串，遵循以下规则：<ul>
+<li>如果字符串只包含数字，则转换为十进制数值(第一位可以是正负号，忽略前导0).</li>
+<li>如果字符串包含有效的浮点数，则转换为对应的浮点数值(忽略前导0).</li>
+<li>如果字符串包含有效的十六进制数，则转换为等值的十进制数值.</li>
+<li>如果字符串为空字符串，则转换为0.</li>
+<li>如果字符串不符合以上规则，则转换为NaN.</li>
+</ul>
+</li>
+<li>如果是对象，则先调用<code>valueOf()</code>方法，再调用<code>toString()</code>方法，分别转换它们的返回值. </li>
+</ul>
+<h4 id="parseInt"><a href="#parseInt" class="headerlink" title="parseInt()"></a>parseInt()</h4><blockquote>
+<p><code>parseInt()</code>主要用来处理整数形式的字符串。它会忽略前导的空字符，直到检索到第一个非空字符，然后判断这个非空字符。如果这个非空字符不是有效的数字字符或正负号，则返回NaN。否则，继续检索下面的字符，直到字符检索完或检索到一个非有效数字字符后停止，返回结果(注意：小数点不是有效的数字字符，所以遇到小数点会停止检索并返回结果)。另外，根据以上规则，可以发现，空字符串返回的是NaN，而<code>Number()</code>对空字符串返回的结果是0.</p>
+<p><code>parseInt()</code>也能自动识别出不同进制数的数值，但是在解析看起来像八进制数的字符串时，ECMAScript 3和5存在分歧，因此，<code>parseInt()</code>可以接收第二个参数，用来表示将以多少进制数解析字符串。实际上，如果指定了第二个参数为16，字符串可以忽略前导的<code>0x</code>，但是，如果没指定参数，则不能忽略。佛一个然破：</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="built_in">parseInt</span>(<span class="string">'0xAF'</span>,<span class="number">16</span>);	<span class="comment">//175</span></span><br><span class="line"><span class="keyword">var</span> num1 = <span class="built_in">parseInt</span>(<span class="string">'AF'</span>,<span class="number">16</span>);	<span class="comment">//175</span></span><br><span class="line"><span class="keyword">var</span> num2 = <span class="built_in">parseInt</span>(<span class="string">'AF'</span>);		<span class="comment">//NaN</span></span><br></pre></td></tr></table></figure>
+<h4 id="parseFloat"><a href="#parseFloat" class="headerlink" title="parseFloat()"></a>parseFloat()</h4><blockquote>
+<p><code>parseFloat()</code>也是从第一个非空字符开始解析每一个字符，直到解析到最后一个字符或是遇到第一个非有效的浮点数数字字符为止。注意以下几点：</p>
+<ul>
+<li>第一个小数点是有效的，后面的小数点都是无效的.</li>
+<li><code>parseFloat()</code>只解析十进制数，因此它没有第二个参数.十六进制格式的字符串总会被解析成0.</li>
+<li>如果能转换为整数，总会转换成整数，因为保存浮点数的所需要的内存更大.</li>
+<li>与<code>parseInt()</code>一样，空字符串会被解析成NaN.</li>
+</ul>
+</blockquote>
+<h2 id="String类型"><a href="#String类型" class="headerlink" title="String类型"></a>String类型</h2><h3 id="字符字面量-转义字符"><a href="#字符字面量-转义字符" class="headerlink" title="字符字面量(转义字符)"></a>字符字面量(转义字符)</h3><blockquote>
+<p>每个字符字面量(转义字符)都可以出现在一个字符串中的任何位置，尽管他们看起来可能是一长串，但只会被当成一个字符来解析。可以通过<code>length</code>属性来访问字符串中有多少个字符。</p>
+</blockquote>
+<h3 id="转换为字符串"><a href="#转换为字符串" class="headerlink" title="转换为字符串"></a>转换为字符串</h3><blockquote>
+<p>把其他类型的值转换为字符串有两种方式：调用几乎每个值都有的<code>toString()</code>方法，调用<code>String()</code>转型函数。</p>
+</blockquote>
+<h4 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString()"></a>toString()</h4><blockquote>
+<p>除了<code>null</code>、<code>undefined</code>外，其他所有的值都有<code>toString()</code>方法:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n = <span class="number">12</span>,</span><br><span class="line">    s = <span class="string">'hello world'</span>,</span><br><span class="line">    b = <span class="literal">true</span>,</span><br><span class="line">    o = &#123;&#125;;</span><br><span class="line">n.toString();	<span class="comment">//'12'</span></span><br><span class="line">s.toString();	<span class="comment">//'hello world'</span></span><br><span class="line">b.toString();	<span class="comment">//'true'</span></span><br><span class="line">o.toString();	<span class="comment">//'[object Object]'</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>在调用数值的<code>toString()</code>方法时，可以接收一个参数用来表示以多少进制数输出这个字符串。</p>
+</blockquote>
+<h4 id="String"><a href="#String" class="headerlink" title="String()"></a>String()</h4><blockquote>
+<p>对<code>null</code>、<code>undefined</code>调用<code>String()</code>转型函数，分别得到<code>&#39;null&#39;</code>、<code>&#39;undefined&#39;</code>.对其他类型的数据调用<code>String()</code>，实际上会调用这个值的<code>toString()</code>方法(不带参数).</p>
+</blockquote>
+<h2 id="Object类型"><a href="#Object类型" class="headerlink" title="Object类型"></a>Object类型</h2><blockquote>
+<p>Object类型是所有其他对象实例的基础，Object类型所拥有的属性和方法都被其他实例所继承。Object类型具有以下属性和方法：</p>
+</blockquote>
+<ul>
+<li>constructor — 保存着用于创建当前实例的构造函数</li>
+<li>hasOwnProperty(propertyName) — 检测实例是否拥有某个属性，propertyName必须是字符串形式，返回布尔值</li>
+<li>obj1.isPrototypeOf(obj2) — 检测obj1是否为obj2的原型，返回布尔值</li>
+<li>propertyIsEnumerable(propertyName) — 检测实例的某个属性是否可被枚举，返回布尔值</li>
+<li>toLocalString() — 返回实例的字符串表示，与执行环境的地区对应</li>
+<li>toString() — 返回实例的字符串表示</li>
+<li>valueOf() — 返回实例的字符串、数值或布尔值表示</li>
+</ul>
+<!-- more -->
+
+
+        <p></p>
+        <h1 id="笔者注"><a href="#笔者注" class="headerlink" title="笔者注"></a>笔者注</h1>
+        <blockquote>
+           <p>博客内文章若不另外注明，均为原创。转载请注明出处，谢谢。</p>
+           <p>博客内容主要是对新知识的归纳、总结。记录博客的目的也是为了方便自己日后的巩固复习。欢迎大家提出文章中理解错误的地方，不胜感激。若文章对你有帮助，将是我的荣幸。</p>
+        
+
+
+      
+    </blockquote></div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Javascript-high-pro-notes/2017-02-14/面向对象一之理解对象.html" rel="prev" title="面向对象一之理解对象">
+                面向对象一之理解对象 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <!-- 多说评论框 start -->
+        <div class="ds-thread" data-thread-key="Javascript-high-pro-notes/2017-02-13/数据类型.html" data-title="数据类型" data-url="http://yoursite.com/Javascript-high-pro-notes/2017-02-13/数据类型.html"></div>
+      <!-- 多说评论框 end -->
+      <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"nikolausliu"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+           || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- 多说公共JS代码 end -->
+
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Nikolaus Liu">
+          <p class="site-author-name" itemprop="name">Nikolaus Liu</p>
+          <p class="site-description motion-element" itemprop="description">Stay hungry,stay foolish.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/nikolausliu" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#typeof操作符"><span class="nav-number">2.1.</span> <span class="nav-text">typeof操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Undefined类型"><span class="nav-number">2.2.</span> <span class="nav-text">Undefined类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Null类型"><span class="nav-number">2.3.</span> <span class="nav-text">Null类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Boolean类型"><span class="nav-number">2.4.</span> <span class="nav-text">Boolean类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Number类型"><span class="nav-number">2.5.</span> <span class="nav-text">Number类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NaN"><span class="nav-number">2.5.1.</span> <span class="nav-text">NaN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数值转换"><span class="nav-number">2.5.2.</span> <span class="nav-text">数值转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Number"><span class="nav-number">2.5.2.1.</span> <span class="nav-text">Number()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#parseInt"><span class="nav-number">2.5.2.2.</span> <span class="nav-text">parseInt()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#parseFloat"><span class="nav-number">2.5.2.3.</span> <span class="nav-text">parseFloat()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#String类型"><span class="nav-number">2.6.</span> <span class="nav-text">String类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符字面量-转义字符"><span class="nav-number">2.6.1.</span> <span class="nav-text">字符字面量(转义字符)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转换为字符串"><span class="nav-number">2.6.2.</span> <span class="nav-text">转换为字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#toString-NaN"><span class="nav-number">2.6.2.1.</span> <span class="nav-text">toString()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String"><span class="nav-number">2.6.2.2.</span> <span class="nav-text">String()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object类型"><span class="nav-number">2.7.</span> <span class="nav-text">Object类型</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nikolaus Liu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="beian-info">
+  <a href="http://beian.miit.gov.cn/" target="_blank">
+    皖ICP备20004310号-1
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"nikolausliu"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

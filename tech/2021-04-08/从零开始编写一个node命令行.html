@@ -1,0 +1,880 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="nodejs,cli,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="缘起 摸鱼的时候经常能看到有些文章的开头会放一张纯色背景搭配一个单词的图片，用来大致说明这篇文章的主题，就像上面这样。我就想这样简单的图片是不是可以通过一些工具来快捷的生成呢？我知道canvas可以快捷的绘制文本并且生成图片，需求很好实现。那么通过什么工具承载呢？命令行似乎是个不错的选择，接收用户输入的单词，通过一些额外的参数来控制图片样式，生成图片后下载到用户的硬盘上。一番实践后发现效果还不错，">
+<meta name="keywords" content="nodejs,cli">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从零开始编写一个node命令行">
+<meta property="og:url" content="http://yoursite.com/tech/2021-04-08/从零开始编写一个node命令行.html">
+<meta property="og:site_name" content="NIKO&#39;S BLOG">
+<meta property="og:description" content="缘起 摸鱼的时候经常能看到有些文章的开头会放一张纯色背景搭配一个单词的图片，用来大致说明这篇文章的主题，就像上面这样。我就想这样简单的图片是不是可以通过一些工具来快捷的生成呢？我知道canvas可以快捷的绘制文本并且生成图片，需求很好实现。那么通过什么工具承载呢？命令行似乎是个不错的选择，接收用户输入的单词，通过一些额外的参数来控制图片样式，生成图片后下载到用户的硬盘上。一番实践后发现效果还不错，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/549e15d17dee431e9d6805a4621f9eb6~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e951c3a535e44b2887512956fff74742~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c1028aef432c4bd996f6440fb3548580~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7f6032a60f0141789837455b7a5f52a0~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dac7944617ca4aef8a7d352edfbd7faa~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e23e7a12156142b6ac3bcb07ad5ea4dc~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6dab4cf94b064a4386c10704f806c80f~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ce6f53a29e4c454fa45efe14eb34b50a~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/69e86d9140de40baa7a7f645b244128b~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/469a73f5461a49d485cd58ca36a04a55~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:image" content="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d7d5865bc51145c0836231223c87eb11~tplv-k3u1fbpfcp-watermark.image">
+<meta property="og:updated_time" content="2021-04-09T09:05:05.069Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从零开始编写一个node命令行">
+<meta name="twitter:description" content="缘起 摸鱼的时候经常能看到有些文章的开头会放一张纯色背景搭配一个单词的图片，用来大致说明这篇文章的主题，就像上面这样。我就想这样简单的图片是不是可以通过一些工具来快捷的生成呢？我知道canvas可以快捷的绘制文本并且生成图片，需求很好实现。那么通过什么工具承载呢？命令行似乎是个不错的选择，接收用户输入的单词，通过一些额外的参数来控制图片样式，生成图片后下载到用户的硬盘上。一番实践后发现效果还不错，">
+<meta name="twitter:image" content="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/549e15d17dee431e9d6805a4621f9eb6~tplv-k3u1fbpfcp-watermark.image">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/tech/2021-04-08/从零开始编写一个node命令行.html">
+
+
+
+
+
+  <title> 从零开始编写一个node命令行 | NIKO'S BLOG </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">NIKO'S BLOG</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-laboratory">
+          <a href="/laboratory" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-dashboard"></i> <br>
+            
+            实验室
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/tech/2021-04-08/从零开始编写一个node命令行.html">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Nikolaus Liu">
+    <meta itemprop="description" content>
+    <meta itemprop="image" content="/images/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="NIKO'S BLOG">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="NIKO'S BLOG" src>
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                从零开始编写一个node命令行
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-04-08T20:31:35+08:00">
+                2021-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tech/" itemprop="url" rel="index">
+                    <span itemprop="name">编程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/tech/2021-04-08/从零开始编写一个node命令行.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="tech/2021-04-08/从零开始编写一个node命令行.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h1><p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/549e15d17dee431e9d6805a4621f9eb6~tplv-k3u1fbpfcp-watermark.image" alt="ecmascript.png"></p>
+<p>摸鱼的时候经常能看到<br>有些文章的开头会放一张纯色背景搭配一个单词的图片，用来大致说明这篇文章的主题，就像上面这样。我就想这样简单的图片是不是可以通过一些工具来快捷的生成呢？我知道canvas可以快捷的绘制文本并且生成图片，需求很好实现。那么通过什么工具承载呢？命令行似乎是个不错的选择，接收用户输入的单词，通过一些额外的参数来控制图片样式，生成图片后下载到用户的硬盘上。一番实践后发现效果还不错，于是就有了这篇文章，详细地说明下如何从零开始编写一个Node命令行工具。</p>
+<a id="more"></a>
+<h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><p>初始化项目</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir word2img-cli</span><br><span class="line"><span class="built_in">cd</span> word2img-cli</span><br><span class="line">npm init</span><br></pre></td></tr></table></figure>
+<p>package.json需要做一些改动，删除<code>main</code>和<code>scripts</code>字段，因为用不到，增加<code>bin</code>字段，用于指定可执行文件路径。这里用到了markdown的文件的diff代码高亮，用于标记文件改动，接下来通篇涉及到文件diff的地方都会使用此方法。</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  &#123;</span><br><span class="line">    "name": "word2img-cli",</span><br><span class="line">    "version": "0.0.1",</span><br><span class="line">    "description": "command line interface for generate image based on your input",</span><br><span class="line"><span class="deletion">-   "main": "index.js",</span></span><br><span class="line"><span class="deletion">-   "scripts": &#123;</span></span><br><span class="line"><span class="deletion">-     "test": "echo \"Error: no test specified\" &amp;&amp; exit 1"</span></span><br><span class="line"><span class="deletion">-   &#125;,</span></span><br><span class="line"><span class="addition">+   "bin": &#123;</span></span><br><span class="line"><span class="addition">+     "word2img": "bin/word2img.js"</span></span><br><span class="line"><span class="addition">+   &#125;</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>新建<code>bin/word2img.js</code>文件，输入如下内容</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env node</span><br><span class="line"></span><br><span class="line">console.log('hello world')</span><br></pre></td></tr></table></figure>
+<p>现在在命令行输入<code>./bin/word2img.js</code>，已经可以看到正常的输出了</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e951c3a535e44b2887512956fff74742~tplv-k3u1fbpfcp-watermark.image" alt="output01.png"></p>
+<p>但是现在需要输入文件的相对路径，这个不酷，我们来把相对路径去掉，命令行输入<code>npm link</code></p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c1028aef432c4bd996f6440fb3548580~tplv-k3u1fbpfcp-watermark.image" alt="npm-link.png"></p>
+<p>此时直接在命令行输入命令<code>word2img</code>，也可以得到和刚才一样的输出了，不错，可以不用写路径直接输入命令了，有内味了。</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7f6032a60f0141789837455b7a5f52a0~tplv-k3u1fbpfcp-watermark.image" alt="output02.png"></p>
+<p>到这里，需要解释下上面引入的几个概念</p>
+<h2 id="package-json的bin字段"><a href="#package-json的bin字段" class="headerlink" title="package.json的bin字段"></a>package.json的bin字段</h2><p>bin字段用于映射可执行文件的路径，作用类似于添加环境变量，参考<a href="https://docs.npmjs.com/cli/v7/configuring-npm/package-json#bin" target="_blank" rel="noopener">官方文档</a></p>
+<h2 id="文件开头的-usr-bin-env-node"><a href="#文件开头的-usr-bin-env-node" class="headerlink" title="文件开头的#!/usr/bin/env node"></a>文件开头的<code>#!/usr/bin/env node</code></h2><p>用来向系统指明这个文件的解释器是node，参考<a href="https://en.wikipedia.org/wiki/Shebang_(Unix" target="_blank" rel="noopener">Shebang</a>)</p>
+<h2 id="npm-link"><a href="#npm-link" class="headerlink" title="npm link"></a>npm link</h2><p>从上面贴的<code>npm link</code>执行输出的截图可以看到，就是进行了一个软链的过程，把当前项目软链到nodejs安装目录的node_modules文件夹下的同名文件夹，然后再软链到nodejs安装目录下的同名可执行文件。</p>
+<p>以我当前项目为例，我使用的是windows系统，打开<code>C:\Program Files\nodejs\</code>文件夹，可以看到多了两个文件<code>word2img</code>和<code>word2img.cmd</code>，这两个文件都可以用编辑器打开，这里就不贴了，有兴趣可以自己操作下。同时<code>C:\Program Files\nodejs\node_modules\</code>文件夹下多了一个<code>word2img-cli</code>的软连接文件夹，内容和我们的项目一样。</p>
+<p>执行完这个命令后就可以全局使用我们的命令了，<code>npm link</code>还可以指定项目使用，这里就不展开了，要了解详细用法还是参考<a href="https://docs.npmjs.com/cli/v7/commands/npm-link" target="_blank" rel="noopener">官方文档</a>。</p>
+<h1 id="初探commander和chalk"><a href="#初探commander和chalk" class="headerlink" title="初探commander和chalk"></a>初探commander和chalk</h1><p>现在我们的命令行只能直接敲个命令，输出一个<code>hello world</code>，好像完全没有什么卵用。让我们来回顾下常见命令行都有哪些玩法吧，以常用的<code>@vue/cli</code>为例：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看当前版本</span></span><br><span class="line">vue -V <span class="comment"># 或 vue --version</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看使用说明</span></span><br><span class="line">vue -h <span class="comment"># 或 vue --help</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建项目</span></span><br><span class="line">vue create vue-demo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过option指定使用某个preset新建项目</span></span><br><span class="line">vue create -p vue3 vue3-demo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加eslint插件</span></span><br><span class="line">vue add eslint</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加eslint插件，并指定插件options</span></span><br><span class="line">vue add eslint --config airbnb --lintOn save</span><br></pre></td></tr></table></figure>
+<p>有最常见的查看版本和查看使用说明功能，这个是比较通用的功能。同时<code>vue create vue-demo</code>里的<code>create</code>是命令(command)，<code>vue-demo</code>是命令的值。而<code>vue create -p vue3 vue3-demo</code>里的<code>-p</code>则是选项(option)，<code>vue3</code>则是选项<code>p</code>的值。</p>
+<p>还可以通过不同的位置来指定不同的选项，比如上面<code>vue add eslint --config airbnb --lintOn save</code>里的<code>--config airbnb --lintOn save</code>是传递给<code>eslint</code>这个插件的选项<code>pluginOptions</code>。输入<code>vue -h</code>看到<code>vue add [options] &lt;plugin&gt; [pluginOptions]</code>也可以验证这一点。</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dac7944617ca4aef8a7d352edfbd7faa~tplv-k3u1fbpfcp-watermark.image" alt="vue-h.png"></p>
+<p>上图最后一句<code>Run vue &lt;command&gt; --help for detailed usage of given command.</code>，意思是每一个命令后跟option<code>--help</code>还可以查看这个命令的使用说明，以<code>vue create</code>为例：</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e23e7a12156142b6ac3bcb07ad5ea4dc~tplv-k3u1fbpfcp-watermark.image" alt="vue-create--help.png"></p>
+<h2 id="commander"><a href="#commander" class="headerlink" title="commander"></a>commander</h2><p>接下来，开始实现这些类似的效果。我们用原生nodejs也可以处理命令行参数，但是比较麻烦，<code>[commander](https://www.npmjs.com/package/commander)</code>是一个成熟的解决方案。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save commander</span><br></pre></td></tr></table></figure>
+<p>修改<code>./bin/word2img.js</code>文件：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  #!/usr/bin/env node</span><br><span class="line"></span><br><span class="line"><span class="deletion">- console.log('hello world')</span></span><br><span class="line"><span class="addition">+ const program = require('commander')</span></span><br><span class="line"><span class="addition">+ program.version(require('../package').version).usage('&lt;command&gt; [options]')</span></span><br><span class="line"><span class="addition">+ program.parse(process.argv)</span></span><br></pre></td></tr></table></figure>
+<p>此时，分别输入<code>word2img -V</code>(这里是大写，或者<code>--version</code>)和<code>-h</code>(或者<code>--help</code>)，可以看到查看版本和查看使用说明功能已经完成了。对比下下面的贴图和上面<code>vue</code>命令的贴图，已经很接近了，这些都是<code>commander</code>帮我们完成的，而这仅仅需要三行代码，代码很简单就不展开解释了。</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/6dab4cf94b064a4386c10704f806c80f~tplv-k3u1fbpfcp-watermark.image" alt="output03.png"></p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ce6f53a29e4c454fa45efe14eb34b50a~tplv-k3u1fbpfcp-watermark.image" alt="output04.png"></p>
+<h2 id="chalk"><a href="#chalk" class="headerlink" title="chalk"></a>chalk</h2><p>回到上面<code>vue --help</code>的输出贴图，最后一句<code>Run vue &lt;command&gt; --help for detailed usage of given command.</code>里<code>vue &lt;command&gt; --help</code>一句的颜色是青色的。对命令行的输出进行着色，我们可以使用<a href="https://www.npmjs.com/package/chalk" target="_blank" rel="noopener">chalk</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save chalk</span><br></pre></td></tr></table></figure>
+<p>修改<code>./bin/word2img.js</code>文件：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">  #!/usr/bin/env node</span><br><span class="line"></span><br><span class="line">  const program = require('commander')</span><br><span class="line"><span class="addition">+ const chalk = require('chalk')</span></span><br><span class="line"><span class="addition">+ </span></span><br><span class="line">  program.version(require('../package').version).usage('&lt;command&gt; [options]')</span><br><span class="line"><span class="addition">+ </span></span><br><span class="line"><span class="addition">+ program.on('--help', () =&gt; &#123;</span></span><br><span class="line"><span class="addition">+   console.log()</span></span><br><span class="line"><span class="addition">+   console.log(</span></span><br><span class="line"><span class="addition">+     `  Run $&#123;chalk.cyan(</span></span><br><span class="line"><span class="addition">+       `word2img &lt;command&gt; --help`</span></span><br><span class="line"><span class="addition">+     )&#125; for detailed usage of given command.`</span></span><br><span class="line"><span class="addition">+   )</span></span><br><span class="line"><span class="addition">+   console.log()</span></span><br><span class="line"><span class="addition">+ &#125;)</span></span><br><span class="line"><span class="addition">+ </span></span><br><span class="line">  program.parse(process.argv)</span><br></pre></td></tr></table></figure>
+<p>此时，命令行输入<code>word2img -h</code>，已经能看到带颜色的输出了</p>
+<p><img src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/69e86d9140de40baa7a7f645b244128b~tplv-k3u1fbpfcp-watermark.image" alt="output05.png"></p>
+<p>可以看到<code>chalk</code>的用法很简单，它提供了很多内置颜色，要了解更消息的用法可以查看官网。</p>
+<h1 id="定义第一个命令"><a href="#定义第一个命令" class="headerlink" title="定义第一个命令"></a>定义第一个命令</h1><p>回过头来看下文章的第一张图片，如果我们的需求就是接收用户输入的字符串，把它转化成一张纯色背景文字居中的图片，那么我们可以大致确定出我们需要的来自外部的变量有这些：</p>
+<ul>
+<li>word(将要被转化成图片的字符串)</li>
+<li>width(图片的宽度)</li>
+<li>height(图片的高度)</li>
+<li>bgColor(图片的背景颜色)</li>
+<li>color(文字的颜色)</li>
+<li>size(文字的大小font-size)</li>
+<li>family(文字的字体font-family)</li>
+<li>filename(要下载的图片的文件名)</li>
+<li>filepath(图片保存的路径)</li>
+</ul>
+<p>其中word是命令本身的值，其它的都是选项，先不考虑canvas绘制图片的业务代码部分，仅考虑接收上面提到的这些变量，那我们可以写出如下的代码，修改<code>./bin/word2img.js</code>：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// program.version及上面的代码省略</span><br><span class="line">// program.version(...)</span><br><span class="line"></span><br><span class="line"><span class="addition">+ program</span></span><br><span class="line"><span class="addition">+   .command('new &lt;word&gt;')</span></span><br><span class="line"><span class="addition">+   .description('generate a new image use the input word')</span></span><br><span class="line"><span class="addition">+   .option('-w --width &lt;width&gt;', 'Set width of the image', 600)</span></span><br><span class="line"><span class="addition">+   .option('--height &lt;height&gt;', 'Set geight of the image', 200)</span></span><br><span class="line"><span class="addition">+   .option('--bgColor &lt;bgColor&gt;', 'Set backgound-color of the image', '#fff')</span></span><br><span class="line"><span class="addition">+   .option('--color &lt;color&gt;', 'Set color of the word', '#000')</span></span><br><span class="line"><span class="addition">+   .option('--size &lt;size&gt;', 'Set font-size of the word', 48)</span></span><br><span class="line"><span class="addition">+   .option('--family &lt;family&gt;', 'Set font-family of the word', 'Arial')</span></span><br><span class="line"><span class="addition">+   .option('--filename &lt;filename&gt;', 'Set filename of the image')</span></span><br><span class="line"><span class="addition">+   .option('--filepath &lt;filepath&gt;', 'Set file path to save the image(note that the path doesn\'t contain the file name)', process.cwd())</span></span><br><span class="line"><span class="addition">+   .action((word, options) =&gt; &#123;</span></span><br><span class="line"><span class="addition">+     console.log(word, options)</span></span><br><span class="line"><span class="addition">+     // canvas绘制并生成图片...</span></span><br><span class="line"><span class="addition">+   &#125;)</span></span><br><span class="line"></span><br><span class="line">// program.on及以下的代码省略</span><br><span class="line">// program.on(...)</span><br></pre></td></tr></table></figure>
+<p>命令行输入<code>word2img new &#39;hello world&#39;</code>，可以得到如下输出：</p>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/469a73f5461a49d485cd58ca36a04a55~tplv-k3u1fbpfcp-watermark.image" alt="output06.png"></p>
+<p>解释下上面的代码和输出：首先<code>program.command</code>方法接收一个字符串<code>new &lt;word&gt;</code>，这就定义了一个命令，其中<code>new</code>就是命令的名称，<code>&lt;word&gt;</code>指代这个命令的值。紧接着<code>description</code>方法接收一个字符串用来简要描述这个命令的作用。</p>
+<p>下面跟了多个串行的<code>option</code>方法，定义命令的选项，正好和我们上面说的变量一一对应。这个方法的第一个参数和命令类似，定义选项名称（注意选项一个横杠<code>-w</code>代表简写但是只能跟一个字母，两个横杠<code>--width</code>后面不限制字符长度）。第二个参数是一个用来描述这个选项作用的字符串。如果你想为这个选项提供一个默认值，则可以通过第三个选项指定。</p>
+<p>最后通过<code>action</code>方法来监听用户输入，当用户输入<code>new</code>命令后会触发回调函数，回调函数的第一个参数是命令的值，第二个参数是上面的选项对象，从上面的输出截图也可以看到这两个值。后续的具体业务代码就可以在这个回调函数里补充了。</p>
+<h1 id="实现canvas相关业务代码"><a href="#实现canvas相关业务代码" class="headerlink" title="实现canvas相关业务代码"></a>实现canvas相关业务代码</h1><p>本文的重点其实是命令行相关知识，所以业务代码就不做详细说明了，直接上代码：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save canvas</span><br></pre></td></tr></table></figure>
+<p>新建<code>./utils/newCanvas.js</code>，内容如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; createCanvas &#125; = <span class="built_in">require</span>(<span class="string">'canvas'</span>)</span><br><span class="line"></span><br><span class="line">exports.newCanvas = <span class="function"><span class="keyword">function</span> (<span class="params">word, options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> canvas = createCanvas(options.width, options.height)</span><br><span class="line">  <span class="keyword">const</span> ctx = canvas.getContext(<span class="string">'2d'</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// rect</span></span><br><span class="line">  ctx.fillStyle = options.bgColor</span><br><span class="line">  ctx.fillRect(<span class="number">0</span>, <span class="number">0</span>, options.width, options.height)</span><br><span class="line">  <span class="comment">// word</span></span><br><span class="line">  ctx.textBaseline = <span class="string">'middle'</span></span><br><span class="line">  ctx.textAlign = <span class="string">'center'</span></span><br><span class="line">  ctx.font = <span class="string">`<span class="subst">$&#123;options.size&#125;</span>px <span class="subst">$&#123;options.family&#125;</span>`</span></span><br><span class="line">  ctx.fillStyle = options.color</span><br><span class="line">  ctx.fillText(word, options.width / <span class="number">2</span>, options.height / <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    canvas,</span><br><span class="line">    ctx,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>新建<code>./utils/canvas2img.js</code>，内容如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="keyword">const</span> chalk = <span class="built_in">require</span>(<span class="string">'chalk'</span>)</span><br><span class="line"></span><br><span class="line">exports.canvas2img = <span class="function"><span class="keyword">function</span> (<span class="params">canvas, filename, filepath</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> buf = canvas.toBuffer()</span><br><span class="line">  filename = filename || <span class="string">`word2img_<span class="subst">$&#123;<span class="built_in">Date</span>.now()&#125;</span>.png`</span></span><br><span class="line">  <span class="keyword">const</span> url = path.resolve(filepath, filename)</span><br><span class="line">  fs.writeFile(url, buf, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(err)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(</span><br><span class="line">        <span class="string">`✨ image generated successfully at: <span class="subst">$&#123;chalk.yellow(</span></span></span><br><span class="line"><span class="string"><span class="subst">          url</span></span></span><br><span class="line"><span class="string"><span class="subst">        )&#125;</span>`</span></span><br><span class="line">      )</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>./bin/word2img.js</code>文件内容修改如下：</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">  #!/usr/bin/env node</span><br><span class="line">  </span><br><span class="line">  const program = require('commander')</span><br><span class="line">  const chalk = require('chalk')</span><br><span class="line"><span class="addition">+ const &#123; newCanvas &#125; = require('../utils/newCanvas')</span></span><br><span class="line"><span class="addition">+ const &#123; canvas2img &#125; = require('../utils/canvas2img')</span></span><br><span class="line">  </span><br><span class="line">  program.version(require('../package').version).usage('&lt;command&gt; [options]')</span><br><span class="line">  </span><br><span class="line">  program</span><br><span class="line">    .command('new &lt;word&gt;')</span><br><span class="line">    .description('generate a new image use the input word')</span><br><span class="line">    .option('-w --width &lt;width&gt;', 'Set width of the image', 600)</span><br><span class="line">    .option('--height &lt;height&gt;', 'Set geight of the image', 200)</span><br><span class="line">    .option('--bgColor &lt;bgColor&gt;', 'Set backgound-color of the image', '#fff')</span><br><span class="line">    .option('--color &lt;color&gt;', 'Set color of the word', '#000')</span><br><span class="line">    .option('--size &lt;size&gt;', 'Set font-size of the word', 48)</span><br><span class="line">    .option('--family &lt;family&gt;', 'Set font-family of the word', 'Arial')</span><br><span class="line">    .option('--filename &lt;filename&gt;', 'Set filename of the image')</span><br><span class="line">    .option('--filepath &lt;filepath&gt;', 'Set file path to save the image(note that the path doesn\'t contain the file name)', process.cwd())</span><br><span class="line">    .action((word, options) =&gt; &#123;</span><br><span class="line"><span class="deletion">-     console.log(word)</span></span><br><span class="line"><span class="deletion">-     console.log(options)</span></span><br><span class="line"><span class="addition">+     const &#123; canvas &#125; = newCanvas(word, options)</span></span><br><span class="line"><span class="addition">+     canvas2img(canvas, options.filename, options.filepath)</span></span><br><span class="line">    &#125;)</span><br><span class="line">  </span><br><span class="line">  program.on('--help', () =&gt; &#123;</span><br><span class="line">    console.log()</span><br><span class="line">    console.log(</span><br><span class="line">      `  Run $&#123;chalk.cyan(</span><br><span class="line">        `word2img &lt;command&gt; --help`</span><br><span class="line">      )&#125; for detailed usage of given command.`</span><br><span class="line">    )</span><br><span class="line">    console.log()</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">  program.parse(process.argv)</span><br></pre></td></tr></table></figure>
+<p>此时，命令行输入<code>word2img new &#39;hello-word&#39;</code>,成功在项目根目录生成了图片，并且终端会提示文件的位置信息。当然，也可以传递上面列举的不同的选项，这里就不一一列举了。</p>
+<p><img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d7d5865bc51145c0836231223c87eb11~tplv-k3u1fbpfcp-watermark.image" alt="output07.png"></p>
+<p>至此，一个简单的命令行就完成了，基本实现了文章开头的需求。实际上还有很多可以优化的地方，比如可以通过命令行提问让用户输入答案或选择答案的方式来简化冗长的选项输入，提升用户体验，熟悉<code>@vue/cli</code>的小伙伴对此应该不会感到陌生。限于篇幅以及代码复杂度，这部分就不在文章里介绍了，有兴趣的可以查看<a href="https://github.com/nikolausliu/word2img-cli" target="_blank" rel="noopener">项目源码</a>，或者直接看<code>@vue/cli</code>的源码，我在写这个项目之前就看了<code>@vue/cli</code>的源码，得到了很多帮助。</p>
+<h1 id="发布npm包"><a href="#发布npm包" class="headerlink" title="发布npm包"></a>发布npm包</h1><p>到<a href="https://www.npmjs.com/" target="_blank" rel="noopener">npm官网</a>注册个账号，然后命令行<code>npm login</code>输入用户名密码登录一下，登录成功后<code>npm whoami</code>可以看到自己的用户名：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm login</span><br><span class="line">npm whoami</span><br></pre></td></tr></table></figure>
+<p>如果npm使用了淘宝源需要切换到官方源，建议使用nrm管理npm源</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install -g nrm</span><br><span class="line">nrm ls</span><br><span class="line">nrm use npm</span><br></pre></td></tr></table></figure>
+<p>然后发布，如果发布提示403，可能是包重名了或者邮件没认证，到邮件里点下认证就好了</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm publish</span><br></pre></td></tr></table></figure>
+<p>npm发布成功后，到官网搜索<code>word2img-cli</code>就可以看到我们的包了，我这边是已经发布过的，感兴趣的小伙伴可以去安装下玩玩。</p>
+
+
+        <p></p>
+        <h1 id="笔者注"><a href="#笔者注" class="headerlink" title="笔者注"></a>笔者注</h1>
+        <blockquote>
+           <p>博客内文章若不另外注明，均为原创。转载请注明出处，谢谢。</p>
+           <p>博客内容主要是对新知识的归纳、总结。记录博客的目的也是为了方便自己日后的巩固复习。欢迎大家提出文章中理解错误的地方，不胜感激。若文章对你有帮助，将是我的荣幸。</p>
+        
+
+
+      
+    </blockquote></div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/nodejs/" rel="tag"># nodejs</a>
+          
+            <a href="/tags/cli/" rel="tag"># cli</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/tech/2019-11-19/vue配置devServer解决跨域问题.html" rel="next" title="vue配置devServer解决跨域问题">
+                <i class="fa fa-chevron-left"></i> vue配置devServer解决跨域问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/tech/2021-04-09/git多账号管理.html" rel="prev" title="git多账号管理">
+                git多账号管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <!-- 多说评论框 start -->
+        <div class="ds-thread" data-thread-key="tech/2021-04-08/从零开始编写一个node命令行.html" data-title="从零开始编写一个node命令行" data-url="http://yoursite.com/tech/2021-04-08/从零开始编写一个node命令行.html"></div>
+      <!-- 多说评论框 end -->
+      <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"nikolausliu"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+           || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- 多说公共JS代码 end -->
+
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Nikolaus Liu">
+          <p class="site-author-name" itemprop="name">Nikolaus Liu</p>
+          <p class="site-description motion-element" itemprop="description">Stay hungry,stay foolish.</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/nikolausliu" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#缘起"><span class="nav-number">1.</span> <span class="nav-text">缘起</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化"><span class="nav-number">2.</span> <span class="nav-text">初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#package-json的bin字段"><span class="nav-number">2.1.</span> <span class="nav-text">package.json的bin字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件开头的-usr-bin-env-node"><span class="nav-number">2.2.</span> <span class="nav-text">文件开头的#!/usr/bin/env node</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#npm-link"><span class="nav-number">2.3.</span> <span class="nav-text">npm link</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初探commander和chalk"><span class="nav-number">3.</span> <span class="nav-text">初探commander和chalk</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#commander"><span class="nav-number">3.1.</span> <span class="nav-text">commander</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chalk"><span class="nav-number">3.2.</span> <span class="nav-text">chalk</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定义第一个命令"><span class="nav-number">4.</span> <span class="nav-text">定义第一个命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现canvas相关业务代码"><span class="nav-number">5.</span> <span class="nav-text">实现canvas相关业务代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#发布npm包"><span class="nav-number">6.</span> <span class="nav-text">发布npm包</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nikolaus Liu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+<div class="beian-info">
+  <a href="http://beian.miit.gov.cn/" target="_blank">
+    皖ICP备20004310号-1
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"nikolausliu"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
