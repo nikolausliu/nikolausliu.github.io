@@ -383,7 +383,7 @@
           
             <p>我在ts项目中声明了一个全局type，在使用这个type的时候，可以获得类型提示，但是eslint的<code>no-undef</code>规则无法校验通过</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">declare global &#123;</span><br><span class="line">  type IdLike = number | string | null</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="http://ww1.sinaimg.cn/large/d7f38664ly1grycdjnus9j20iq047q31.jpg" alt="全局type声明"><br><img src="http://ww1.sinaimg.cn/large/d7f38664ly1grycdjo0ksj20k804cglx.jpg" alt="eslint no-undef"></p>
+<p><img src="/images/20210628/01.png" alt="全局type声明"><br><img src="/images/20210628/02.png" alt="eslint no-undef"></p>
 <p>查阅eslint官方文档得知，需要配置eslint配置文件（<code>.eslintrc.*</code>文件或<code>package.json</code>文件的<code>eslintConfig</code>字段）里的<code>globals</code>字段：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  globals: &#123;</span><br><span class="line">    IdLike: true</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>声明了几个全局type就要配置几个，还挺麻烦的，但是目前没找到更好的解决方案。</p>
