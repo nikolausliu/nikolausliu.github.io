@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="javascript,算法,">
+  <meta name="keywords" content="typescript,eslint,">
 
 
 
@@ -87,18 +87,21 @@
 
 
 
-<meta name="description" content="今天记录下数组去重的几种方法，主要是思路。自觉在算法和数据结构方面比较薄弱，以后要注意这方面的学习。">
-<meta name="keywords" content="javascript,算法">
+<meta name="description" content="我在ts项目中声明了一个全局type，在使用这个type的时候，可以获得类型提示，但是eslint的no-undef规则无法校验通过 123declare global &amp;#123;  type IdLike = number | string | null&amp;#125;  查阅eslint官方文档得知，需要配置eslint配置文件（.eslintrc.*文件或package.json文件的esli">
+<meta name="keywords" content="typescript,eslint">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数组去重的几种方法">
-<meta property="og:url" content="http://yoursite.com/tech/2018-07-03/数组去重的几种方法.html">
+<meta property="og:title" content="eslint的无法识别ts全局type解决方案">
+<meta property="og:url" content="http://yoursite.com/tech/2021-06-28/eslint的无法识别ts全局type解决方案.html">
 <meta property="og:site_name" content="NIKO&#39;S BLOG">
-<meta property="og:description" content="今天记录下数组去重的几种方法，主要是思路。自觉在算法和数据结构方面比较薄弱，以后要注意这方面的学习。">
+<meta property="og:description" content="我在ts项目中声明了一个全局type，在使用这个type的时候，可以获得类型提示，但是eslint的no-undef规则无法校验通过 123declare global &amp;#123;  type IdLike = number | string | null&amp;#125;  查阅eslint官方文档得知，需要配置eslint配置文件（.eslintrc.*文件或package.json文件的esli">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-26T12:56:59.239Z">
+<meta property="og:image" content="https://segmentfault.com/img/bVcS3ls">
+<meta property="og:image" content="https://segmentfault.com/img/bVcS3lo">
+<meta property="og:updated_time" content="2021-06-28T14:06:26.387Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="数组去重的几种方法">
-<meta name="twitter:description" content="今天记录下数组去重的几种方法，主要是思路。自觉在算法和数据结构方面比较薄弱，以后要注意这方面的学习。">
+<meta name="twitter:title" content="eslint的无法识别ts全局type解决方案">
+<meta name="twitter:description" content="我在ts项目中声明了一个全局type，在使用这个type的时候，可以获得类型提示，但是eslint的no-undef规则无法校验通过 123declare global &amp;#123;  type IdLike = number | string | null&amp;#125;  查阅eslint官方文档得知，需要配置eslint配置文件（.eslintrc.*文件或package.json文件的esli">
+<meta name="twitter:image" content="https://segmentfault.com/img/bVcS3ls">
 
 
 
@@ -126,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tech/2018-07-03/数组去重的几种方法.html">
+  <link rel="canonical" href="http://yoursite.com/tech/2021-06-28/eslint的无法识别ts全局type解决方案.html">
 
 
 
 
 
-  <title> 数组去重的几种方法 | NIKO'S BLOG </title>
+  <title> eslint的无法识别ts全局type解决方案 | NIKO'S BLOG </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -269,7 +272,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/tech/2018-07-03/数组去重的几种方法.html">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/tech/2021-06-28/eslint的无法识别ts全局type解决方案.html">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Nikolaus Liu">
@@ -293,7 +296,7 @@
             
             
               
-                数组去重的几种方法
+                eslint的无法识别ts全局type解决方案
               
             
           </h1>
@@ -308,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-03T20:28:32+08:00">
-                2018-07-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-06-28T21:41:47+08:00">
+                2021-06-28
               </time>
             
 
@@ -349,8 +352,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/tech/2018-07-03/数组去重的几种方法.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="tech/2018-07-03/数组去重的几种方法.html" itemprop="commentCount"></span>
+                <a href="/tech/2021-06-28/eslint的无法识别ts全局type解决方案.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="tech/2021-06-28/eslint的无法识别ts全局type解决方案.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -376,17 +379,19 @@
       
 
       
-        <p>今天记录下数组去重的几种方法，主要是思路。自觉在算法和数据结构方面比较薄弱，以后要注意这方面的学习。<br><a id="more"></a></p>
-<h1 id="1-利用ES6的Set"><a href="#1-利用ES6的Set" class="headerlink" title="1. 利用ES6的Set"></a>1. 利用ES6的Set</h1><p>ES6提供了一种新的数据结构Set,这种数据结构类似于数组，但是成员的值都是唯一的，不管是基本类型的值还是引用类型的值。学习更多关于Set的知识可以参考<a href="http://es6.ruanyifeng.com/#docs/set-map" target="_blank" rel="noopener">ECMAScript6入门一书</a>。</p>
-<p>Set是一个构造函数，它可以接受一个数组作为参数，返回的Set实例对象的成员都是唯一的。利用<code>Array.from()</code>方法我们可以把Set对象转换为数组。所以通过Set这个“中转站”我们就达到了数组去重的目的。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Set</span>(arr))  <span class="comment">// [1, 2, 3]</span></span><br></pre></td></tr></table></figure>
-<h1 id="2-使用includes或indexOf"><a href="#2-使用includes或indexOf" class="headerlink" title="2. 使用includes或indexOf"></a>2. 使用includes或indexOf</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> res = []</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (arr.length) &#123;</span><br><span class="line">    <span class="keyword">var</span> item = arr.shift()</span><br><span class="line">    <span class="comment">// if (arr.indexOf(item) === -1) &#123;</span></span><br><span class="line">    <span class="keyword">if</span> (!arr.includes(item)) &#123;</span><br><span class="line">      res.push(item)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(res)</span><br><span class="line">  <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">unique(arr) <span class="comment">// [1, 2, 3]</span></span><br></pre></td></tr></table></figure>
-<p>上面的代码先声明一个空数组作为最终要返回的结果数组，然后从数组头部遍历数组，判断当前遍历的项，如果结果数组中不存在该项，则push进结果数组，否则继续遍历。</p>
-<h1 id="3-使用双层for循环嵌套，相同项删除"><a href="#3-使用双层for循环嵌套，相同项删除" class="headerlink" title="3. 使用双层for循环嵌套，相同项删除"></a>3. 使用双层for循环嵌套，相同项删除</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> array = [...arr]</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> j = i + <span class="number">1</span>; j &lt; array.length; j++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (array[i] === array[j]) &#123;</span><br><span class="line">        array.splice(j, <span class="number">1</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(array)</span><br><span class="line">  <span class="keyword">return</span> array</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">unique(arr)  <span class="comment">// [1, 2, 3]</span></span><br></pre></td></tr></table></figure>
-<p>这种方法的思路也是比较清晰的，两层for循环，判断两次for循环中当前遍历的项是否相等，如果相等，则用splice方法删除内层for循环的当前项。需要注意的几点是：(1)内层for循环的起始索引应该使用外层索引+1，因为相同的项不需要比较。(2)这里使用全等操作符<code>===</code>来判断来个数组项是否重复是不够严谨的，首先<code>NaN === NaN</code>返回的是false，判断NaN应该用<code>isNaN()</code>方法；其次对象是否重复也要看具体要求，是要求对象的引用地址一致才算相同，还是说只要对象的属性一致就算相同要具体需求具体分析。在这里只是记录一下思路，就不做多余的判断了。(3)splice方法会修改原数组，所以最好像上面代码那样把输入函数的数组参数做一次拷贝。</p>
-<h1 id="4-先排序然后相邻项比较"><a href="#4-先排序然后相邻项比较" class="headerlink" title="4. 先排序然后相邻项比较"></a>4. 先排序然后相邻项比较</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> array = [...arr].sort()</span><br><span class="line">  <span class="keyword">var</span> res = [array[<span class="number">0</span>]]</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (array[i] !== array[i - <span class="number">1</span>]) &#123;</span><br><span class="line">      res.push(array[i])</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(res)</span><br><span class="line">  <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">unique(arr)  <span class="comment">// [1, 2, 3]</span></span><br></pre></td></tr></table></figure>
-<p>这种方法的思路是先把原数组排序，排序后的数组，如果有重复项，那么重复项之间一定是相邻的，此时再遍历数组，只需要比较相邻项，相邻项不相同就把当前项push进预先定义的结果数组中，最后返回结果数组。</p>
-<p>这里需要注意的是要比较的相邻项应该是<code>array[i]</code>和<code>array[i - 1]</code>而不是<code>array[i]</code>和<code>array[i + 1]</code>，因为<code>array[i + 1]</code>已经超出数组的length范围了。相应的，遍历的起始索引也要从1开始，而不能从0开始，因为从0开始<code>i - 1</code>就小于0了。还没完，起始索引从1开始，就意味着push这个动作也是从1开始的，所以要在遍历之前结果数组的初始化就应该包含数组索引0的项。</p>
+        <p>我在ts项目中声明了一个全局type，在使用这个type的时候，可以获得类型提示，但是eslint的<code>no-undef</code>规则无法校验通过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">declare global &#123;</span><br><span class="line">  type IdLike = number | string | null</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://segmentfault.com/img/bVcS3ls" alt="全局type声明"><br><img src="https://segmentfault.com/img/bVcS3lo" alt="eslint no-undef"></p>
+<p>查阅eslint官方文档得知，需要配置eslint配置文件（<code>.eslintrc.*</code>文件或<code>package.json</code>文件的<code>eslintConfig</code>字段）里的<code>globals</code>字段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  globals: &#123;</span><br><span class="line">    IdLike: true</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>声明了几个全局type就要配置几个，还挺麻烦的，但是目前没找到更好的解决方案。</p>
+<p>我这里是用作了全局type，globals更常见的用法是设置全局变量，值可以是<code>writable</code>和<code>readonly</code>，很好理解就是字面意思，由于历史包袱这两个值分别有两个备选项，效果一致。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;globals&quot;: &#123;</span><br><span class="line">        &quot;var1&quot;: &quot;writable&quot;,  // 或&quot;writeable&quot; 或 true</span><br><span class="line">        &quot;var2&quot;: &quot;readonly&quot;  // 或&quot;off&quot; 或 false</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>更多参考官方文档：</p>
+<ul>
+<li><a href="https://eslint.org/docs/rules/no-undef#disallow-undeclared-variables-no-undef" target="_blank" rel="noopener">disallow-undeclared-variables-no-undef</a></li>
+<li><a href="https://eslint.org/docs/user-guide/configuring/language-options#specifying-globals" target="_blank" rel="noopener">specifying-globals</a></li>
+</ul>
 
 
         <p></p>
@@ -419,9 +424,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/javascript/" rel="tag"># javascript</a>
+            <a href="/tags/typescript/" rel="tag"># typescript</a>
           
-            <a href="/tags/算法/" rel="tag"># 算法</a>
+            <a href="/tags/eslint/" rel="tag"># eslint</a>
           
         </div>
       
@@ -434,8 +439,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/tech/2018-06-11/关于深拷贝.html" rel="next" title="关于深拷贝">
-                <i class="fa fa-chevron-left"></i> 关于深拷贝
+              <a href="/tech/2021-05-13/记录第一次大型开源项目contribution.html" rel="next" title="记录第一次大型开源项目contribution">
+                <i class="fa fa-chevron-left"></i> 记录第一次大型开源项目contribution
               </a>
             
           </div>
@@ -443,10 +448,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/tech/2018-08-15/浅谈this、call、apply和bind.html" rel="prev" title="浅谈this、call、apply和bind">
-                浅谈this、call、apply和bind <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -500,7 +501,7 @@
   <div class="comments" id="comments">
     
       <!-- 多说评论框 start -->
-        <div class="ds-thread" data-thread-key="tech/2018-07-03/数组去重的几种方法.html" data-title="数组去重的几种方法" data-url="http://yoursite.com/tech/2018-07-03/数组去重的几种方法.html"></div>
+        <div class="ds-thread" data-thread-key="tech/2021-06-28/eslint的无法识别ts全局type解决方案.html" data-title="eslint的无法识别ts全局type解决方案" data-url="http://yoursite.com/tech/2021-06-28/eslint的无法识别ts全局type解决方案.html"></div>
       <!-- 多说评论框 end -->
       <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
       <script type="text/javascript">
@@ -538,17 +539,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Nikolaus Liu">
           <p class="site-author-name" itemprop="name">Nikolaus Liu</p>
@@ -613,22 +605,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-利用ES6的Set"><span class="nav-number">1.</span> <span class="nav-text">1. 利用ES6的Set</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-使用includes或indexOf"><span class="nav-number">2.</span> <span class="nav-text">2. 使用includes或indexOf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-使用双层for循环嵌套，相同项删除"><span class="nav-number">3.</span> <span class="nav-text">3. 使用双层for循环嵌套，相同项删除</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-先排序然后相邻项比较"><span class="nav-number">4.</span> <span class="nav-text">4. 先排序然后相邻项比较</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
     </div>
