@@ -17,8 +17,8 @@ declare global {
 }
 ```
 
-![全局type声明]( https://segmentfault.com/img/bVcS3ls)
-![eslint no-undef](https://segmentfault.com/img/bVcS3lo)
+![全局type声明](http://ww1.sinaimg.cn/large/d7f38664ly1grycdjnus9j20iq047q31.jpg)
+![eslint no-undef](http://ww1.sinaimg.cn/large/d7f38664ly1grycdjo0ksj20k804cglx.jpg)
 
 查阅eslint官方文档得知，需要配置eslint配置文件（`.eslintrc.*`文件或`package.json`文件的`eslintConfig`字段）里的`globals`字段：
 
