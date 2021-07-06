@@ -3,9 +3,6 @@ title: Vue3 script setup提案终于定稿了
 date: 2021-07-06 20:32:27
 tags:
   - vue3
-categories:
-  - 编程
-comments:
 ---
 
 vue3的`<script setup>`提案处于实验阶段已经几个月了，当我们用vite的vue模板时终端会提示我们这仍是一个实验性提案，并且建议我们如果使用这个写法要锁vue版本以避免breakage。所以之前我只是对这个提案做了个了解，并没有在工作中使用这个写法。终于我们在2021年6月29日上午迎来了他的[Finalization](https://github.com/vuejs/rfcs/pull/227#issuecomment-870105222)，下面简单梳理下这个定稿的内容。

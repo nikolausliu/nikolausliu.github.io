@@ -7,7 +7,7 @@ title: NIKO'S BLOG
 subtitle:
 description: Stay hungry,stay foolish.
 author: Nikolaus Liu
-language: zh-Hans
+language: zh-CN
 timezone:
 
 # URL
@@ -15,7 +15,8 @@ timezone:
 url: http://yoursite.com
 root: /
 # permalink: :year/:month/:day/:title/
-permalink: :category/:year-:month-:day/:title.html
+# permalink: :category/:year-:month-:day/:title.html
+permalink: :year-:month-:day/:title.html
 permalink_defaults:
 
 # Directory
@@ -47,9 +48,9 @@ highlight:
 # Category & Tag
 default_category: uncategorized
 category_map:
-  Javascript高程笔记: Javascript-high-pro-notes
-  编程: tech
-  随笔: essay
+  # Javascript高程笔记: Javascript-high-pro-notes
+  # 编程: tech
+  # 随笔: essay
 tag_map:
 
 # Date / Time format
