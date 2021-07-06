@@ -170,7 +170,7 @@ avatar:
   # If true, the avatar will be rotated with the cursor.
   rotated: true
 
-# Posts / Categories / Tags in sidebar.
+# Posts / Categories / Tags in sidebar.`
 site_state: true
 
 # Social Links
@@ -390,7 +390,7 @@ bookmark:
 
 # `Follow me on GitHub` banner in the top-right corner.
 github_banner:
-  enable: true
+  enable: false
   permalink: https://github.com/nikolausliu
   title: Follow me on GitHub
 
