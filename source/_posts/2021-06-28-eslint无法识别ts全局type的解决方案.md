@@ -17,8 +17,8 @@ declare global {
 }
 ```
 
-![全局type声明](/images/20210628/01.png)
-![eslint no-undef](/images/20210628/02.png)
+<img src="/images/20210628/01.png" alt="全局type声明" width="100%" />
+<img src="/images/20210628/02.png" alt="eslint no-undef" width="100%" />
 
 查阅eslint官方文档得知，需要配置eslint配置文件（`.eslintrc.*`文件或`package.json`文件的`eslintConfig`字段）里的`globals`字段：
 

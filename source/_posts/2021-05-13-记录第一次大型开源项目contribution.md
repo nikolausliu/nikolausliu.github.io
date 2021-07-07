@@ -7,7 +7,8 @@ categories: 编程
 comments:
 ---
 
-![](https://nuxtjs.org/logos/nuxtjs-typo.svg)
+<!-- ![](https://nuxtjs.org/logos/nuxtjs-typo.svg) -->
+<img src="https://nuxtjs.org/logos/nuxtjs-typo.svg" width="100%" />
 
 题目起得有点唬人，有点标题党了。实际上就只是改了[nuxtjs官方文档的一处谬误](https://nuxtjs.org/docs/2.x/directory-structure/pages#the-watchquery-property)。这里是[PR地址](https://github.com/nuxt/nuxtjs.org/pull/1431)。
 
