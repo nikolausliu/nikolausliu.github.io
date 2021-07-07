@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="题目起得有点唬人，有点标题党了。实际上就只是改了nuxtjs官方文档的一处谬误。这里是PR地址。">
+<meta name="keywords" content="github">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录第一次大型开源项目contribution">
+<meta property="og:url" content="http://yoursite.com/2021-05-13/记录第一次大型开源项目contribution.html">
+<meta property="og:site_name" content="NIKO&#39;S BLOG">
+<meta property="og:description" content="题目起得有点唬人，有点标题党了。实际上就只是改了nuxtjs官方文档的一处谬误。这里是PR地址。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://nuxtjs.org/logos/nuxtjs-typo.svg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/d7f38664ly1gqgy26197kj20s00lxgo5.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/d7f38664ly1gqgy25xus5j20v60q2jtx.jpg">
+<meta property="og:updated_time" content="2021-07-07T02:01:00.459Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记录第一次大型开源项目contribution">
+<meta name="twitter:description" content="题目起得有点唬人，有点标题党了。实际上就只是改了nuxtjs官方文档的一处谬误。这里是PR地址。">
+<meta name="twitter:image" content="https://nuxtjs.org/logos/nuxtjs-typo.svg">
+
+<link rel="canonical" href="http://yoursite.com/2021-05-13/记录第一次大型开源项目contribution.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>记录第一次大型开源项目contribution | NIKO'S BLOG</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">NIKO'S BLOG</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-laboratory">
+
+    <a href="/laboratory" rel="section"><i class="fa fa-flask fa-fw"></i>实验室</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021-05-13/记录第一次大型开源项目contribution.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Nikolaus Liu">
+      <meta itemprop="description" content="Stay hungry,stay foolish.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NIKO'S BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          记录第一次大型开源项目contribution
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-13 17:42:18" itemprop="dateCreated datePublished" datetime="2021-05-13T17:42:18+08:00">2021-05-13</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <!-- ![](https://nuxtjs.org/logos/nuxtjs-typo.svg) -->
+<p><img src="https://nuxtjs.org/logos/nuxtjs-typo.svg" width="100%"></p>
+<p>题目起得有点唬人，有点标题党了。实际上就只是改了<a href="https://nuxtjs.org/docs/2.x/directory-structure/pages#the-watchquery-property" target="_blank" rel="noopener">nuxtjs官方文档的一处谬误</a>。这里是<a href="https://github.com/nuxt/nuxtjs.org/pull/1431" target="_blank" rel="noopener">PR地址</a>。</p>
+<a id="more"></a>
+<p>现在来简单解释一下这个谬误：</p>
+<p>浏览器地址栏<code>query</code>发生改变后，nuxtjs出于性能考虑默认是不会重新调用<code>asyncData, fetch</code>等来重新拉取数据的。通过<code>watchQuery</code>选项你可以自定义这个行为。但是问题出在nuxtjs在2.12版本后推出的<code>new fetch hook</code>是不受<code>watchQuery</code>影响的，我上面贴出的那一页官方文档却没有把这个问题交代清楚，它原本的话是这样的：</p>
+<blockquote>
+<p>Use the <code>watchQuery</code> key to set up a watcher for query strings. If the defined strings change, all component methods (asyncData, <strong>fetch</strong>, validate, layout, …) will be called. Watching is disabled by default to improve performance.</p>
+</blockquote>
+<p>并没有体现出新的<code>fetch</code>不受影响这一点，所以我把<code>fetch</code>改成了<code>fetch(context)</code>（新老<code>fetch</code>的一个区别就是老的有<code>context</code>参数，新的没有）。</p>
+<p>另外把下面alert提示信息也改了：</p>
+<p>老的：</p>
+<blockquote>
+<p>If you want to set up a watcher for all query strings, set <code>watchQuery</code> to <code>true</code></p>
+</blockquote>
+<p>新的：</p>
+<blockquote>
+<p><strong>Warning</strong>: The new <code>fetch</code> hook introduced in 2.12 is not affected by <code>watchQuery</code>. For more information see <a href="/docs/2.x/features/data-fetching#the-fetch-hook">listening to query string changes</a>.</p>
+</blockquote>
+<p>贴一下文档截图和PR截图</p>
+<p><img src="http://ww1.sinaimg.cn/large/d7f38664ly1gqgy26197kj20s00lxgo5.jpg" alt="官方文档修改"></p>
+<p><img src="http://ww1.sinaimg.cn/large/d7f38664ly1gqgy25xus5j20v60q2jtx.jpg" alt="Pull request"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/github/" rel="tag"><i class="fa fa-tag"></i> github</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021-04-09/git多账号管理.html" rel="prev" title="git多账号管理">
+      <i class="fa fa-chevron-left"></i> git多账号管理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021-06-28/eslint无法识别ts全局type的解决方案.html" rel="next" title="eslint的无法识别ts全局type解决方案">
+      eslint的无法识别ts全局type解决方案 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nikolaus Liu"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Nikolaus Liu</p>
+  <div class="site-description" itemprop="description">Stay hungry,stay foolish.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/nikolausliu" title="GitHub → https://github.com/nikolausliu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nikolaus Liu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '3207dfac3182b72bf5a3',
+      clientSecret: 'b92697f5e07512d3c58f486fb25041a11890b5f9',
+      repo        : 'nikolausliu.github.io',
+      owner       : 'nikolausliu',
+      admin       : ['nikolausliu'],
+      id          : '3555d6f35c3f409679990746904a6e0a',
+        language: '',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前言 以前在写网页上常用的功能时，经常差不多同样的js代码会重复好几遍，而重来没想过把它封装起来，增加代码的复用性。最近把一些常用的功能封装了一下，而jquery插件式的封装方法也是几经周折、查了一些资料才弄出来的。下面就用最常用的选项卡为例子来说明一下吧。">
+<meta name="keywords" content="jquery,封装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于jquery的选项卡封装(插件)">
+<meta property="og:url" content="http://yoursite.com/2017-02-14/基于jquery的选项卡封装-插件.html">
+<meta property="og:site_name" content="NIKO&#39;S BLOG">
+<meta property="og:description" content="前言 以前在写网页上常用的功能时，经常差不多同样的js代码会重复好几遍，而重来没想过把它封装起来，增加代码的复用性。最近把一些常用的功能封装了一下，而jquery插件式的封装方法也是几经周折、查了一些资料才弄出来的。下面就用最常用的选项卡为例子来说明一下吧。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-09T09:05:05.053Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于jquery的选项卡封装(插件)">
+<meta name="twitter:description" content="前言 以前在写网页上常用的功能时，经常差不多同样的js代码会重复好几遍，而重来没想过把它封装起来，增加代码的复用性。最近把一些常用的功能封装了一下，而jquery插件式的封装方法也是几经周折、查了一些资料才弄出来的。下面就用最常用的选项卡为例子来说明一下吧。">
+
+<link rel="canonical" href="http://yoursite.com/2017-02-14/基于jquery的选项卡封装-插件.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>基于jquery的选项卡封装(插件) | NIKO'S BLOG</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">NIKO'S BLOG</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-laboratory">
+
+    <a href="/laboratory" rel="section"><i class="fa fa-flask fa-fw"></i>实验室</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017-02-14/基于jquery的选项卡封装-插件.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Nikolaus Liu">
+      <meta itemprop="description" content="Stay hungry,stay foolish.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NIKO'S BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基于jquery的选项卡封装(插件)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-02-14 17:04:37" itemprop="dateCreated datePublished" datetime="2017-02-14T17:04:37+08:00">2017-02-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>以前在写网页上常用的功能时，经常差不多同样的js代码会重复好几遍，而重来没想过把它封装起来，增加代码的复用性。最近把一些常用的功能封装了一下，而jquery插件式的封装方法也是几经周折、查了一些资料才弄出来的。下面就用最常用的选项卡为例子来说明一下吧。</p>
+</blockquote>
+<hr>
+<a id="more"></a>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>首先，jquery官方是提供了一个写插件的模板的，像<a href="http://www.superslide2.com/" target="_blank" rel="noopener">superSlide</a>等插件就是基于这样的模板写的。然而一开始我并不知道有这样一个模板，我想写出类似于superSlide这样调用的效果<code>$(selector).slide({})</code>，我当时的理解是：<code>slide()</code>肯定是一个jquery对象<code>$(selector)</code>的方法，也是因为原型那一块没学好，在那里苦思冥想怎么把这个方法挂到每一个jquery对象的实例上呢？现在可以事后诸葛亮的说直接把方法挂在jquery对象的原型上，通过继承链继承不就好了？恩，扯远了，先把模板代码贴一下吧，然后再解释下这个模板：</p>
+<h2 id="jquery插件模板"><a href="#jquery插件模板" class="headerlink" title="jquery插件模板"></a>jquery插件模板</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自行引入jquery库</span></span><br><span class="line">;(<span class="function"><span class="keyword">function</span>(<span class="params">$</span>)</span>&#123;</span><br><span class="line">  $.fn.plugin = <span class="function"><span class="keyword">function</span>(<span class="params">options</span>)</span>&#123;    <span class="comment">//plugin为插件名，可以自行修改</span></span><br><span class="line">    <span class="keyword">var</span> defaults = &#123;</span><br><span class="line">      <span class="comment">//各种参数，各种属性，这里是默认配置</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> opts = $.extend(&#123;&#125;,defaults,options);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="comment">//实现功能的代码都放在这里</span></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;    <span class="comment">//返回基于选择器的jquery对象，保证链式操作</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)(jQuery);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//调用时的代码示例</span></span><br><span class="line">$(<span class="string">'.tab'</span>).plugin(&#123;<span class="comment">//这里就先不写了&#125;);</span></span><br></pre></td></tr></table></figure>
+<p>把上面的代码简化一下就是<code>(function($){})(jQuery);</code>，还有另一种写法<code>(function($){}(jQuery));</code>，效果是一样的 (其实jquery的源码也是采用这种形式的<code>(function(window,undefined){})(window)</code>）。这种形式就是一个匿名函数自执行，把所有的代码封装在里面就避免了污染全局对象，在浏览器里也就是window对象。前面加一个<code>;</code>是为了避免与其它的库或代码产生”摩擦”。再看这段代码<code>$.fn.plugin = function(options){}</code>，<code>$.fn</code>实际上就是jQuery的原型prototype，那<code>$.fn.plugin</code>就相当于在jQuery的原型上定义了一个方法，这个方法接收一个参数<code>options</code>，这个参数是一个对象。这个方法内部的代码又可以分为4大块：</p>
+<ol>
+<li><code>var defaults = {};</code> 把功能代码中可能会变化的变量(比如dom节点)提取出来，给一个默认的值，组成一个对象，方便调用者在调用的时候按照需求修改，如果调用的时候什么都不传，就用默认的。</li>
+<li><code>var opts = $.extend({},defaults,options);</code> 关于<code>$.extend()</code>的具体用法，可以参看<a href="http://www.css88.com/jqapi-1.9/jQuery.extend/" target="_blank" rel="noopener">官方文档中对这个API的说明</a>。其实粗略的理解就是把defaults和options这两个对象合并起来成为一个新的对象opts(后面功能代码里用到的变量都是用的opts这个对象的属性)，options里的属性值会覆盖掉defaults里的属性值，options里没有的属性，就用defaults里提供的默认属性值。</li>
+<li><code>this.each(function(){});</code> 实现功能的代码都往这里面扔就好了，没什么好说的。</li>
+<li><code>return this；</code> 返回值this就是对应dom节点的jquery对象，比如<code>$(&#39;.tab&#39;)</code>。加上这个返回值才能支持链式操作，比如<code>$(&#39;.tab&#39;).plugin().sinbling()...</code></li>
+</ol>
+<h2 id="示例demo代码"><a href="#示例demo代码" class="headerlink" title="示例demo代码"></a>示例demo代码</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- html代码 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"tab"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"tab-title"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ol</span> <span class="attr">class</span>=<span class="string">"clearfix"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"tab-cont"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"clearfix"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>内容1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>内容2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span>&gt;</span>内容3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* css代码 */</span></span><br><span class="line">* &#123; <span class="attribute">margin</span>:<span class="number">0</span>; <span class="attribute">padding</span>:<span class="number">0</span>;&#125;</span><br><span class="line"><span class="selector-tag">li</span> &#123; <span class="attribute">list-style</span>: none;&#125;</span><br><span class="line"><span class="selector-class">.clearfix</span><span class="selector-pseudo">:after</span> &#123; </span><br><span class="line"><span class="attribute">content</span>: <span class="string">""</span> ; </span><br><span class="line"><span class="attribute">display</span>: block ;</span><br><span class="line"><span class="attribute">height</span>: <span class="number">0</span> ;</span><br><span class="line"><span class="attribute">clear</span>: both ;</span><br><span class="line"><span class="attribute">visibility</span>: hidden ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.tab-title</span> <span class="selector-tag">li</span>&#123; <span class="attribute">float</span>: left; <span class="attribute">width</span>: <span class="number">100px</span>; <span class="attribute">height</span>: <span class="number">50px</span>; <span class="attribute">text-align</span>: center;<span class="attribute">cursor</span>:pointer; <span class="attribute">line-height</span>: <span class="number">50px</span>;&#125;</span><br><span class="line"><span class="selector-class">.tab-title</span> <span class="selector-tag">li</span><span class="selector-class">.on</span> &#123; <span class="attribute">background</span>: purple; <span class="attribute">color</span>: <span class="number">#fff</span>;&#125;</span><br><span class="line"><span class="selector-class">.tab-cont</span> <span class="selector-tag">li</span> &#123; <span class="attribute">width</span>: <span class="number">300px</span>; <span class="attribute">height</span>: <span class="number">300px</span>;<span class="attribute">text-align</span>: center; <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#333</span>;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* jquery-funtab-1.0.js */</span></span><br><span class="line">;(<span class="function"><span class="keyword">function</span>(<span class="params">$</span>)</span>&#123;</span><br><span class="line">  $.fn.funTab = <span class="function"><span class="keyword">function</span>(<span class="params">options</span>)</span>&#123;</span><br><span class="line">    $.fn.funTab.defaults = &#123;</span><br><span class="line">      titItem: <span class="string">'.tab-title li'</span>,  <span class="comment">//选项卡导航对应的选择器 </span></span><br><span class="line">      contItem: <span class="string">'.tab-cont li'</span>,  <span class="comment">//选项卡内容区对应的选择器</span></span><br><span class="line">      trigger: <span class="string">'mouseover'</span>,      <span class="comment">//事件</span></span><br><span class="line">      titOnClassName: <span class="string">'on'</span>       <span class="comment">//导航选中样式类名</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> opts = $.extend(&#123;&#125;,$.fn.funTab.defaults,options);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">var</span> funTaber = $(<span class="keyword">this</span>);  <span class="comment">//这里this就是整个选项卡对应的jquery对象，先存一下，避免与下面的事件函数里的this混淆</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">//初始化</span></span><br><span class="line">      funTaber.find(opts.titItem).eq(<span class="number">0</span>).addClass(opts.titOnClassName);</span><br><span class="line">      funTaber.find(opts.contItem).eq(<span class="number">0</span>).show().siblings().hide();</span><br><span class="line">      <span class="keyword">var</span> index;</span><br><span class="line">      <span class="comment">//这里的写法其实和下面的bind写法效果一样，推荐用bind</span></span><br><span class="line">      <span class="comment">//funTaber.find(opts.titItem)[opts.trigger](function()&#123;</span></span><br><span class="line">      <span class="comment">//  $(this).addClass(opts.titOnClassName).siblings().removeClass(opts.titOnClassName);</span></span><br><span class="line">      <span class="comment">//  var index = funTaber.find(opts.titItem).index(this);</span></span><br><span class="line">      <span class="comment">//  funTaber.find(opts.contItem).eq(index).show().siblings().hide();</span></span><br><span class="line">      <span class="comment">//&#125;);</span></span><br><span class="line">      funTaber.find(opts.titItem).bind(opts.trigger,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        $(<span class="keyword">this</span>).addClass(opts.titOnClassName).siblings().removeClass(opts.titOnClassName);</span><br><span class="line">        <span class="keyword">var</span> index = funTaber.find(opts.titItem).index(<span class="keyword">this</span>);</span><br><span class="line">        funTaber.find(opts.contItem).eq(index).show().siblings().hide();</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)(jQuery);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//调用代码</span></span><br><span class="line"><span class="comment">//下面除了trigger外，其他的项都与默认的一致，其实是可以省略不写的，</span></span><br><span class="line">$(<span class="string">'.tab'</span>).funTab(&#123;</span><br><span class="line">  titItem:<span class="string">'.tab-title li'</span>,<span class="attr">contItem</span>:<span class="string">'.tab-cont li'</span>,<span class="attr">trigger</span>:<span class="string">'click'</span>,<span class="attr">titOnClassName</span>:<span class="string">'on'</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<!-- more -->
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/jquery/" rel="tag"><i class="fa fa-tag"></i> jquery</a>
+              <a href="/tags/封装/" rel="tag"><i class="fa fa-tag"></i> 封装</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017-02-14/面向对象一之理解对象.html" rel="prev" title="面向对象一之理解对象">
+      <i class="fa fa-chevron-left"></i> 面向对象一之理解对象
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017-02-15/面向对象二之创建对象.html" rel="next" title="面向对象二之创建对象">
+      面向对象二之创建对象 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jquery插件模板"><span class="nav-number">2.1.</span> <span class="nav-text">jquery插件模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例demo代码"><span class="nav-number">2.2.</span> <span class="nav-text">示例demo代码</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nikolaus Liu"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Nikolaus Liu</p>
+  <div class="site-description" itemprop="description">Stay hungry,stay foolish.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/nikolausliu" title="GitHub → https://github.com/nikolausliu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nikolaus Liu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '3207dfac3182b72bf5a3',
+      clientSecret: 'b92697f5e07512d3c58f486fb25041a11890b5f9',
+      repo        : 'nikolausliu.github.io',
+      owner       : 'nikolausliu',
+      admin       : ['nikolausliu'],
+      id          : 'c72e75d75b28d3599d2c2edb32b17df2',
+        language: '',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
