@@ -1,6 +1,6 @@
 ---
 title: 强大的Array.prototype.reduce
-date: 2021-07-07 11:18:39
+date: 2020-07-07 11:18:39
 tags:
   - JavaScript
   - Array
