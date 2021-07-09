@@ -2,9 +2,9 @@
 title: 浅谈this、call、apply和bind
 date: 2018-08-15 21:24:56
 tags: 
-- JavaScript
-- this
-categories: 编程
+  - JavaScript
+  - this
+categories: 
 comments:
 ---
 this在javascript中是一个比较重要的概念，今天来谈一谈this相关的知识。

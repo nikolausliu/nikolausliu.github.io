@@ -2,8 +2,8 @@
 title: 浅谈vue指令v-model
 date: 2019-02-28 13:34:28
 tags:
-  - vue
-categories: 编程
+  - Vue.js
+categories: 
 comments:
 ---
 

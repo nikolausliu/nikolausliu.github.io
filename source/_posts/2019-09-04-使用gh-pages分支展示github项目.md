@@ -2,9 +2,8 @@
 title: 使用gh-pages分支展示github项目
 date: 2019-09-04 17:42:46
 tags:
-  - github
-  - gh-pages
-categories: 编程
+  - GitHub
+categories:
 comments:
 ---
 

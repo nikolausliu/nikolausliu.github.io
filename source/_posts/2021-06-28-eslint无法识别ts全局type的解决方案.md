@@ -2,10 +2,9 @@
 title: eslint的无法识别ts全局type解决方案
 date: 2021-06-28 21:41:47
 tags:
-  - typescript
-  - eslint
+  - TypeScript
+  - ESLint
 categories:
-  - 编程
 comments:
 ---
 

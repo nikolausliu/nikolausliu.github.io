@@ -2,10 +2,9 @@
 title: vue配置devServer解决跨域问题
 date: 2019-11-19 10:11:23
 tags:
-  - vue
-  - devServer
+  - Vue.js
   - 跨域
-categories: 编程
+categories: 
 comments:
 ---
 

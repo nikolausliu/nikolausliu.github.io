@@ -2,8 +2,8 @@
 title: 记录第一次大型开源项目contribution
 date: 2021-05-13 17:42:18
 tags: 
-  - github
-categories: 编程
+  - GitHub
+categories:
 comments:
 ---
 
