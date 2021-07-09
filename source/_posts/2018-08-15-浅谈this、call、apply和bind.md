@@ -2,7 +2,7 @@
 title: 浅谈this、call、apply和bind
 date: 2018-08-15 21:24:56
 tags: 
-- javascript
+- JavaScript
 - this
 categories: 编程
 comments:

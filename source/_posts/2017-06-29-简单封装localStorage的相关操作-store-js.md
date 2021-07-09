@@ -2,7 +2,7 @@
 title: 简单封装localStorage的相关操作--store.js
 date: 2017-06-29 15:29:51
 tags: 
-- javascript
+- JavaScript
 - 封装
 categories: 编程
 comments:
