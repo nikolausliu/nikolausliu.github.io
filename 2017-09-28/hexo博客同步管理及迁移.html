@@ -21,7 +21,7 @@
   </script>
 
   <meta name="description" content="最近在把公司电脑里的东西迁移到笔记本里的时候遇到了很多麻烦，hexo博客怎么迁移到新电脑中以及怎么在多端同步hexo博客就是其中之一。本文参考了知乎中的高票答案,把过程重新梳理了一遍，并在一些关键的地方做了更详细的阐述，自认为更好理解一点。">
-<meta name="keywords" content="hexo,博客">
+<meta name="keywords" content="Hexo,Blog">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hexo博客同步管理及迁移">
 <meta property="og:url" content="http://yoursite.com/2017-09-28/hexo博客同步管理及迁移.html">
@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://oluuc63f6.bkt.clouddn.com/username.github.io.png">
 <meta property="og:image" content="http://oluuc63f6.bkt.clouddn.com/TIM%E6%88%AA%E5%9B%BE20170928153330.png">
-<meta property="og:updated_time" content="2021-04-09T09:05:05.061Z">
+<meta property="og:updated_time" content="2021-07-09T01:42:31.478Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo博客同步管理及迁移">
 <meta name="twitter:description" content="最近在把公司电脑里的东西迁移到笔记本里的时候遇到了很多麻烦，hexo博客怎么迁移到新电脑中以及怎么在多端同步hexo博客就是其中之一。本文参考了知乎中的高票答案,把过程重新梳理了一遍，并在一些关键的地方做了更详细的阐述，自认为更好理解一点。">
@@ -221,7 +221,7 @@
 
 <p>这里是比较关键的一步了，hexo分支是基于master分支的，它在创建时被赋予了与master分支同样的内容–静态文件。做乜啊，hexo分支不是要存放环境文件的吗？我当时就是在这里比较晕，因为知乎的高票答案在这里说的并不是很清楚。其实现在目的很清晰：<strong>我们希望hexo分支是空的，并把我们本地的hexo项目与hexo分支关联起来，好把环境文件推送过去</strong>。要达到这个目的，要分以下几步走：</p>
 <ul>
-<li>github上切换到hexo分支，<code>git clone</code>仓库到本地。</li>
+<li>GitHub上切换到hexo分支，<code>git clone</code>仓库到本地。</li>
 <li>此时本地会多出一个<code>username.github.io</code>文件夹，命令行<code>cd</code>进去，删除除<code>.git</code>文件夹（如果你看不到这个文件夹，说明是隐藏了。windows下需要右击文件夹内空白处，点选’显示/隐藏 异常文件’，Mac下我就不知道了）外的其他文件夹。</li>
 <li>命令行<code>git add -A</code>把工作区的变化（包括已删除的文件）提交到暂存区（ps:<code>git add .</code>提交的变化不包括已删除的文件）。</li>
 <li>命令行<code>git commint -m &quot;some description&quot;</code>提交。</li>
@@ -262,8 +262,8 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/hexo/" rel="tag"><i class="fa fa-tag"></i> hexo</a>
-              <a href="/tags/博客/" rel="tag"><i class="fa fa-tag"></i> 博客</a>
+              <a href="/tags/Hexo/" rel="tag"><i class="fa fa-tag"></i> Hexo</a>
+              <a href="/tags/Blog/" rel="tag"><i class="fa fa-tag"></i> Blog</a>
           </div>
 
         
@@ -354,19 +354,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-        <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

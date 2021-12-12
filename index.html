@@ -159,7 +159,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021-07-07/强大的Array-prototype-reduce.html">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021-12-09/还在忍受vuex4糟糕的类型体验？试试pinia吧.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -173,7 +173,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021-07-07/强大的Array-prototype-reduce.html" class="post-title-link" itemprop="url">强大的Array.prototype.reduce</a>
+            <a href="/2021-12-09/还在忍受vuex4糟糕的类型体验？试试pinia吧.html" class="post-title-link" itemprop="url">还在忍受Vuex4糟糕的类型体验？试试Pinia吧</a>
         </h2>
 
         <div class="post-meta">
@@ -183,7 +183,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-07-07 11:18:39" itemprop="dateCreated datePublished" datetime="2021-07-07T11:18:39+08:00">2021-07-07</time>
+              <time title="创建时间：2021-12-09 09:22:30" itemprop="dateCreated datePublished" datetime="2021-12-09T09:22:30+08:00">2021-12-09</time>
             </span>
 
           
@@ -197,10 +197,223 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce" target="_blank" rel="noopener">Array.prototype.reduce</a>方法是数组原型方法中比较强大的一个，在某些场景下，用其它方法可能要几步才能完成的，reduce甚至只用一行代码就能搞定。</p>
+          <h1 id="vuex4现状"><a href="#vuex4现状" class="headerlink" title="vuex4现状"></a>vuex4现状</h1><p>Vue.js于2020-09-18发布<code>3.0</code>版本。Vuex于2020-03-15发布<code>4.0-alpha.1</code>版本，至2021-06-17发布<code>4.0.2</code>版本，Vuex已经有好几个月没有发新版了。我从2020年下旬开始在公司中尝试使用一整套Vue3生态 + TypeScript开发项目，算是比较早的使用者了，简单说下我的使用感受。</p>
+<p>Vue3本身加其它几个核心库用起来很丝滑。如果不使用TypeScript的话，vuex4也没啥大毛病，但是一旦用上TypeScript，就难受起来了。Vuex4的TypeScript类型体验我只想用一个字来形容：<strong>拉胯，拉的一</strong>。究其原因，Vuex4源码仍然是使用js开发的，只是向外暴露了types类型声明，而且类型声明还是阉割的，仅仅在<code>types/index.d.ts</code>中我就搜索到了22个<code>any</code>。这就导致如果你想享受Vuex4的类型提示的话，你必须自己额外写非常非常冗长的模板代码来补全这被阉割的类型。</p>
+<p>我知道你可能看过<a href="https://dev.to/vuesomedev/you-might-not-need-vuex-with-vue-3-52e4" target="_blank" rel="noopener">You Might Not Need Vuex with Vue 3</a>这篇文章，然后说Vue3不需要Vuex。的确，简单场景下，这没问题。但是这也意味着你无法享受devtools扩展带来的调试的便利。另外，你无法在<code>setup</code>函数外使用你的响应式状态，试想一个场景：当你想在axios的请求拦截器中获取你响应式状态的用户<code>token</code>，是不是就抓瞎了？</p>
+<p>实际上Vuex官方也清楚现在存在的问题，所以2021年3月2日<a href="https://github.com/kiaking" target="_blank" rel="noopener">kiaking</a>就提交了一个PR:<a href="https://github.com/vuejs/rfcs/pull/271" target="_blank" rel="noopener">Vuex5的提案</a>。不知道为什么，现在vue的<a href="https://github.com/vuejs/rfcs/tree/master/active-rfcs" target="_blank" rel="noopener">rfcs列表</a>里我找不到这个rfc了，但是通过上面PR链接里的<a href="https://github.com/vuejs/rfcs/pull/271/commits/f5e074eda414d48b0b4fc4947afc1889e03a6c4e#diff-fff40c308b74ba26c38a21bd9e50b349ded7e3781660bb7612661cc7c2ebd9f2" target="_blank" rel="noopener">commit记录</a>我们仍然可以看到这条rfc的具体内容，感兴趣的可以看一下。</p>
+<h1 id="Pinia"><a href="#Pinia" class="headerlink" title="Pinia"></a>Pinia</h1><p>说了那么多，那么在Vuex5发布之前，我们要怎么愉快地组织我们的状态管理呢？试试<a href="https://pinia.esm.dev/" target="_blank" rel="noopener">Pinia</a>吧。Pinia本来是为了测试Vuex5提案而出现的，它的作者是Vue.js核心团队的成员，现在它不但支持Vue3也支持Vue2的options API，不过我只用在Vue3中，所以今天不讲options API的用法。虽然它现在的API和Vuex比较像，但是和Vuex相比，它还是又很多明显的不同之处的：</p>
+<ul>
+<li><code>mutations</code>很啰嗦所以移除了，现在只有<code>actions</code>，一开始加入<code>mutations</code>这个概念也只是为了在devtools中明确记录状态变化。</li>
+<li>Pinia源码使用TypeScript开发，不需要像现在Vuex一样写一堆模板代码来支持类型推断。</li>
+<li>Vuex有很多魔法字符串，比如<code>$store.dispatch(&#39;user/login&#39;)</code>，这些魔法字符串都是天生TypeScript不友好的。在Pinia里都变成了函数调用，类型推断友好：<code>store.login()</code>。</li>
+<li>Vuex一般是应用初始化的时候就在<code>main.js</code>里把<code>store</code>一次性注册好了，Pinia是你什么时候调用某个<code>store</code>才会在那个时刻创建。</li>
+<li>不再需要命名空间和模块嵌套了，比如以前Vuex里你划分了<code>user</code>和<code>app</code>这两个模块，通过人为约定的字符串来划分命名空间。现在只需要为这两个模块创建两个独立的文件，分别导出各自的<code>store</code>变量，这已经达到命名空间的目的了。</li>
+</ul>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>Pinia有两种风格的写法，第一种风格的写法官网只粗略的一带而过，如果你不仔细看，可能都注意不到还能这么写：</p>
+<h3 id="composition-API风格写法"><a href="#composition-API风格写法" class="headerlink" title="composition API风格写法"></a>composition API风格写法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ref, computed &#125; <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> &#123; defineStore &#125; <span class="keyword">from</span> <span class="string">'pinia'</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useCounterStore = defineStore(<span class="string">'counter'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="comment">// state</span></span><br><span class="line">  <span class="keyword">const</span> count = ref(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// getters</span></span><br><span class="line">  <span class="keyword">const</span> double = computed(<span class="function"><span class="params">()</span> =&gt;</span> dount.value * <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// actions</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">increment</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    count.value++</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; count, double, increment &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>在组件里使用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useCounterStore &#125; <span class="keyword">from</span> <span class="string">'@/stores/counter'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  setup() &#123;</span><br><span class="line">    <span class="keyword">const</span> counter = useCounterStore()</span><br><span class="line"></span><br><span class="line">    counter.count++</span><br><span class="line">    counter.double <span class="comment">// 2</span></span><br><span class="line">    <span class="comment">// with autocompletion ✨</span></span><br><span class="line">    counter.$patch(&#123; <span class="attr">count</span>: counter.count + <span class="number">1</span> &#125;)</span><br><span class="line">    <span class="comment">// or using an action instead</span></span><br><span class="line">    counter.increment()</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种方式就和我们平时写composition API没啥区别，不过官方只花了很少的篇幅介绍了这种写法，而且这种写法貌似无法配置Pinia的plugin，所以后面主要说第二种用法。</p>
+<h3 id="常用的写法"><a href="#常用的写法" class="headerlink" title="常用的写法"></a>常用的写法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineStore &#125; <span class="keyword">from</span> <span class="string">'pinia'</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useCounterStore = defineStore(<span class="string">'counter'</span>, &#123;</span><br><span class="line">  state: <span class="function"><span class="params">()</span> =&gt;</span> (&#123; <span class="attr">count</span>: <span class="number">0</span> &#125;),</span><br><span class="line">  getters: &#123;</span><br><span class="line">    double: <span class="function">(<span class="params">state</span>) =&gt;</span> state.count * <span class="number">2</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  actions: &#123;</span><br><span class="line">    increment() &#123;</span><br><span class="line">      <span class="keyword">this</span>.count++</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021-08-09/macOS使用指南之Homebrew.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Nikolaus Liu">
+      <meta itemprop="description" content="Stay hungry,stay foolish.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NIKO'S BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021-08-09/macOS使用指南之Homebrew.html" class="post-title-link" itemprop="url">macOS使用指南之Homebrew</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-08-09 08:20:08" itemprop="dateCreated datePublished" datetime="2021-08-09T08:20:08+08:00">2021-08-09</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="what-and-why"><a href="#what-and-why" class="headerlink" title="what and why"></a>what and why</h1><p>打开<a href="https://brew.sh/" target="_blank" rel="noopener">Homebrew官网</a>，映入眼帘的第一句话是：</p>
+<blockquote>
+<p>The Missing Package Manager for macOS (or Linux)</p>
+</blockquote>
+<p>即，<strong>Homebrew是macOS上缺失的包管理器</strong>，就像Linux中的yum、apt等。它让你能用命令行的方式集中的管理你的软件包，而不需要在AppStore和各种软件官网之间反复横跳。搜索、安装、卸载、更新等操作都可以通过命令行来统一完成。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2021-07-07/强大的Array-prototype-reduce.html#more" rel="contents">
+              <a class="btn" href="/2021-08-09/macOS使用指南之Homebrew.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021-07-14/你真的了解async-await吗？进来看看这道题.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Nikolaus Liu">
+      <meta itemprop="description" content="Stay hungry,stay foolish.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NIKO'S BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021-07-14/你真的了解async-await吗？进来看看这道题.html" class="post-title-link" itemprop="url">你真的了解async...await吗？进来看看这道题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-14 17:45:19" itemprop="dateCreated datePublished" datetime="2021-07-14T17:45:19+08:00">2021-07-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>偶然间看到下面这道题，是考察<code>async...await</code>机制的，我觉得还挺有意思的。你可以试试不借助控制台自己在心里推算一下运行结果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Err = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="number">42</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Obj = &#123;</span><br><span class="line">	<span class="keyword">async</span> A ()&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> Err();</span><br><span class="line">		&#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="string">'A'</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="keyword">async</span> B ()&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">await</span> Err();</span><br><span class="line">		&#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="string">'B'</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="keyword">async</span> C ()&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Err();</span><br><span class="line">		&#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="string">'C'</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">( <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">	<span class="keyword">for</span>( <span class="keyword">const</span> key <span class="keyword">in</span> Obj )</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">await</span> Obj[key]();</span><br><span class="line">		&#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="string">'D'</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125; )();</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021-07-14/你真的了解async-await吗？进来看看这道题.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021-07-09/外观数列解题思路.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Nikolaus Liu">
+      <meta itemprop="description" content="Stay hungry,stay foolish.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NIKO'S BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021-07-09/外观数列解题思路.html" class="post-title-link" itemprop="url">外观数列解题思路</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-09 09:17:07" itemprop="dateCreated datePublished" datetime="2021-07-09T09:17:07+08:00">2021-07-09</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>外观数列</strong>是一个整数序列，从数字 1 开始，序列中的每一项都是对前一项的描述。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1       </span><br><span class="line">11</span><br><span class="line">21</span><br><span class="line">1211</span><br><span class="line">111221</span><br><span class="line">第一项是数字 1 </span><br><span class="line">描述前一项，这个数是 1 即 “ 一 个 1 ”，记作 &quot;11&quot;</span><br><span class="line">描述前一项，这个数是 11 即 “ 二 个 1 ” ，记作 &quot;21&quot;</span><br><span class="line">描述前一项，这个数是 21 即 “ 一 个 2 + 一 个 1 ” ，记作 &quot;1211&quot;</span><br><span class="line">描述前一项，这个数是 1211 即 “ 一 个 1 + 一 个 2 + 二 个 1 ” ，记作 &quot;111221&quot;</span><br></pre></td></tr></table></figure>
+<p>外观数列前5项枚举如下：，下面的文字比较清晰的解释了什么是外观数列。这同时也是<a href="https://leetcode.com/problems/count-and-say/" target="_blank" rel="noopener">leetcode的第38题</a>。题目要求<strong>给定一个正整数 n ，输出外观数列的第 n 项</strong>。官网给出了如下的解题思路，我将按照这个解题思路逐步拆解实现这个算法：</p>
+<p><img src="https://assets.leetcode.com/uploads/2020/10/23/countandsay.jpg" alt></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021-07-09/外观数列解题思路.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -558,7 +771,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019-11-19/vue配置devServer解决跨域问题.html">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020-07-07/强大的Array-prototype-reduce.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -572,7 +785,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2019-11-19/vue配置devServer解决跨域问题.html" class="post-title-link" itemprop="url">vue配置devServer解决跨域问题</a>
+            <a href="/2020-07-07/强大的Array-prototype-reduce.html" class="post-title-link" itemprop="url">强大的Array.prototype.reduce</a>
         </h2>
 
         <div class="post-meta">
@@ -582,7 +795,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-11-19 10:11:23" itemprop="dateCreated datePublished" datetime="2019-11-19T10:11:23+08:00">2019-11-19</time>
+              <time title="创建时间：2020-07-07 11:18:39" itemprop="dateCreated datePublished" datetime="2020-07-07T11:18:39+08:00">2020-07-07</time>
             </span>
 
           
@@ -596,205 +809,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>以前请求的接口都是后端配好跨域的请求头，最近请求某个接口时突然报跨域的错，后端一顿操作无果，行吧，我记得以前看到过 vue 可以通过配置 devServer 解决跨域问题，就配一下吧。</p>
+          <p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce" target="_blank" rel="noopener">Array.prototype.reduce</a>方法是数组原型方法中比较强大的一个，在某些场景下，用其它方法可能要几步才能完成的，reduce甚至只用一行代码就能搞定。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2019-11-19/vue配置devServer解决跨域问题.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019-09-04/使用gh-pages分支展示github项目.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Nikolaus Liu">
-      <meta itemprop="description" content="Stay hungry,stay foolish.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="NIKO'S BLOG">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019-09-04/使用gh-pages分支展示github项目.html" class="post-title-link" itemprop="url">使用gh-pages分支展示github项目</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-09-04 17:42:46" itemprop="dateCreated datePublished" datetime="2019-09-04T17:42:46+08:00">2019-09-04</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>很多人都使用 github 的<code>${username}.github.io</code>仓库来托管自己的静态博客，但其实 github 的每个仓库都支持通过<code>${username}.github.io/${repoName}</code>的方式来访问，只需要创建一个<code>gh-pages</code>分支</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019-09-04/使用gh-pages分支展示github项目.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019-05-17/一道数组面试题.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Nikolaus Liu">
-      <meta itemprop="description" content="Stay hungry,stay foolish.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="NIKO'S BLOG">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019-05-17/一道数组面试题.html" class="post-title-link" itemprop="url">一道数组面试题</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-05-17 15:42:13" itemprop="dateCreated datePublished" datetime="2019-05-17T15:42:13+08:00">2019-05-17</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Array</span>(<span class="number">5</span>).filter(<span class="function"><span class="params">item</span> =&gt;</span> item === <span class="literal">undefined</span>).length)</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019-05-17/一道数组面试题.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019-02-28/浅谈vue指令v-model.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Nikolaus Liu">
-      <meta itemprop="description" content="Stay hungry,stay foolish.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="NIKO'S BLOG">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019-02-28/浅谈vue指令v-model.html" class="post-title-link" itemprop="url">浅谈vue指令v-model</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-02-28 13:34:28" itemprop="dateCreated datePublished" datetime="2019-02-28T13:34:28+08:00">2019-02-28</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><code>v-model</code>实际是一种语法糖</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019-02-28/浅谈vue指令v-model.html#more" rel="contents">
+              <a class="btn" href="/2020-07-07/强大的Array-prototype-reduce.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -817,7 +835,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -885,19 +903,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-        <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
