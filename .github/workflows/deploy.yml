@@ -61,6 +61,8 @@ jobs:
           echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.name nikolausliu
+          git config --global user.email 18010855044@163.com
 
       # 生成并部署
       - name: Deploy
