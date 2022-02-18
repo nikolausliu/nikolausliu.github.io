@@ -8,7 +8,7 @@ comments:
 ---
 
 <!-- ![](https://nuxtjs.org/logos/nuxtjs-typo.svg) -->
-<img src="https://nuxtjs.org/logos/nuxtjs-typo.svg" width="100%" />
+<img src="/images/20210513/nuxt.svg" width="100%" />
 
 题目起得有点唬人，有点标题党了。实际上就只是改了[nuxtjs官方文档的一处谬误](https://nuxtjs.org/docs/2.x/directory-structure/pages#the-watchquery-property)。这里是[PR地址](https://github.com/nuxt/nuxtjs.org/pull/1431)。
 
@@ -34,7 +34,9 @@ comments:
 
 贴一下文档截图和PR截图
 
-![官方文档修改](http://ww1.sinaimg.cn/large/d7f38664ly1gqgy26197kj20s00lxgo5.jpg)
+<!-- ![官方文档修改](http://ww1.sinaimg.cn/large/d7f38664ly1gqgy26197kj20s00lxgo5.jpg) -->
+<img src="/images/20210513/01.jpg" width="100%" title="官方文档修改" />
 
-![Pull request](http://ww1.sinaimg.cn/large/d7f38664ly1gqgy25xus5j20v60q2jtx.jpg)
+<!-- ![Pull request](http://ww1.sinaimg.cn/large/d7f38664ly1gqgy25xus5j20v60q2jtx.jpg) -->
+<img src="/images/20210513/02.jpg" width="100%" title="Pull request" />
 
