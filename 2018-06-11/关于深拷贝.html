@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="深拷贝是时常被提到的一个概念，今天来聊一聊深拷贝。">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于深拷贝">
+<meta property="og:url" content="http://yoursite.com/2018-06-11/关于深拷贝.html">
+<meta property="og:site_name" content="NIKO&#39;S BLOG">
+<meta property="og:description" content="深拷贝是时常被提到的一个概念，今天来聊一聊深拷贝。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/d7f38664ly1g0r2azkelvj20cd01ha9x.jpg">
+<meta property="og:updated_time" content="2021-07-09T01:29:50.102Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于深拷贝">
+<meta name="twitter:description" content="深拷贝是时常被提到的一个概念，今天来聊一聊深拷贝。">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/d7f38664ly1g0r2azkelvj20cd01ha9x.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2018-06-11/关于深拷贝.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>关于深拷贝 | NIKO'S BLOG</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">NIKO'S BLOG</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-laboratory">
+
+    <a href="/laboratory" rel="section"><i class="fa fa-flask fa-fw"></i>实验室</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018-06-11/关于深拷贝.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Nikolaus Liu">
+      <meta itemprop="description" content="Stay hungry,stay foolish.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="NIKO'S BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          关于深拷贝
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-11 22:47:16" itemprop="dateCreated datePublished" datetime="2018-06-11T22:47:16+08:00">2018-06-11</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>深拷贝是时常被提到的一个概念，今天来聊一聊深拷贝。<br><a id="more"></a></p>
+<h1 id="什么是深拷贝"><a href="#什么是深拷贝" class="headerlink" title="什么是深拷贝"></a>什么是深拷贝</h1><p>说到深拷贝，就知道肯定有对应的浅拷贝，在理解什么是深拷贝之前，我们不妨先看下什么是浅拷贝。</p>
+<blockquote>
+<p>当从一个变量向另一个变量复制引用类型的值时，同样也会将存储在变量对象中的值复制一份放到为新变量分配的空间中。不同的是，这个值的副本实际上是一个指针，而这个指针指向存储在堆中的一个对象。复制操作结束后，两个变量实际上将引用同一个对象。</p>
+</blockquote>
+<p>上面这段话引用自《JavaScript高级程序设计 第三版》，这句话实际上解释了什么是<strong>浅复制</strong>。当我们把一个对象a赋值给一个变量b时，这时a和b实际指向的是一个对象。理解了浅复制，那么<strong>深复制</strong>的含义就很好理解了。</p>
+<h1 id="深拷贝的几种实现方法"><a href="#深拷贝的几种实现方法" class="headerlink" title="深拷贝的几种实现方法"></a>深拷贝的几种实现方法</h1><h2 id="1-使用JSON序列化操作实现深拷贝"><a href="#1-使用JSON序列化操作实现深拷贝" class="headerlink" title="1. 使用JSON序列化操作实现深拷贝"></a>1. 使用JSON序列化操作实现深拷贝</h2><p>我们知道，JSON对象提供了两个静态方法。其中<code>JSON.parse()</code>用来把JSON字符串转换为对象，而<code>JSON.stringify()</code>则是把对象转换为JSON字符串，正好是一对互逆的操作。利用这两个方法，我们就可以实现深拷贝。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepClone</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.strigify(obj))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;<span class="attr">arr</span>: [<span class="number">1</span>, <span class="number">2</span>], <span class="attr">person</span>: &#123;<span class="attr">name</span>: <span class="string">'Jan'</span>&#125;</span><br><span class="line">deepClone(obj&#125;) <span class="comment">// &#123;arr: [1, 2], person: &#123;name: 'Jan'&#125;</span></span><br></pre></td></tr></table></figure>
+<p>通过上面的代码我们知道了<code>JSON.parse(JSON.strigify(obj))</code>这么简单的一句代码即可实现对象的深拷贝。但是这种方法是有缺陷的，当对象的属性值为一个函数或<code>undefined</code>时，<code>JSON.stringify()</code>会忽略这个属性。</p>
+<p><img src="http://ww1.sinaimg.cn/large/d7f38664ly1g0r2azkelvj20cd01ha9x.jpg" alt="function和undefined会被忽略"></p>
+<h2 id="2-利用for…in循环和递归实现深拷贝"><a href="#2-利用for…in循环和递归实现深拷贝" class="headerlink" title="2. 利用for…in循环和递归实现深拷贝"></a>2. 利用for…in循环和递归实现深拷贝</h2><p>for…in可以遍历对象的属性，所以我们在for…in循环里把对象的属性一个一个添加到预先声明的空对象里，这样就实现了对象的拷贝。当然，还要考虑到如果对象的属性还是对象，那么就需要递归的调用深拷贝函数，把属性值也为对象的属性也做一次拷贝，直到所有的属性都是基本类型为止，这样就完成了深拷贝。需要注意对对象和数组的拷贝操作是有区别的，看下面的代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> deepClone = <span class="function"><span class="keyword">function</span> (<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> obj !== <span class="string">'object'</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'arguments[0] must be an object'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> isArray = <span class="built_in">Array</span>.isArray(obj)</span><br><span class="line">  <span class="keyword">var</span> res = isArray ? [] : &#123;&#125;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> prop <span class="keyword">in</span> obj) &#123;</span><br><span class="line">    res[prop] = <span class="keyword">typeof</span> obj[prop] === <span class="string">'object'</span> ? deepClone(obj[prop]) : obj[prop]</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr1 = [<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line"><span class="keyword">var</span> arr2 = [<span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line"><span class="keyword">var</span> arr = [arr1, arr2]</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj1 = &#123;</span><br><span class="line">  name: <span class="string">'xiaoMing'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj2 = &#123;</span><br><span class="line">  name: <span class="string">'xiaoHong'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">  obj1,</span><br><span class="line">  obj2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里对深拷贝后的数组第一项做push操作，对应的arr1并没有随之改变，说明深拷贝成功</span></span><br><span class="line"><span class="keyword">var</span> arrDeep = deepClone(arr)  <span class="comment">// [[1, 2], [3, 4]]</span></span><br><span class="line">arrDeep[<span class="number">0</span>].push(<span class="number">3</span>)</span><br><span class="line"><span class="built_in">console</span>.log(arr1) <span class="comment">// [1, 2]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里对深拷贝后的对象的obj1属性添加新属性，对应的obj1并没有随之改变，说明深拷贝成功</span></span><br><span class="line"><span class="keyword">var</span> objDeep = deepClone(obj)  <span class="comment">// &#123;obj1: &#123;name: 'xiaoMing'&#125;, obj2: &#123;name: 'xiaoHong'&#125;&#125;</span></span><br><span class="line">objDeep.obj1.age = <span class="number">10</span></span><br><span class="line"><span class="built_in">console</span>.log(obj1) <span class="comment">// &#123;name: 'xiaoMing'&#125;</span></span><br></pre></td></tr></table></figure>
+<p>还有一点需要注意的是：for…in操作返回的是所有 <strong>可通过对象访问</strong>、<strong>可枚举</strong>的属性，这其中也包括了原型上的可枚举属性。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;&#125;</span><br><span class="line">o.__proto__.name = <span class="string">'o'</span></span><br><span class="line"><span class="comment">// 原型上的可枚举属性也被拷贝了</span></span><br><span class="line">deepClone(o)  <span class="comment">// &#123;name: o&#125;</span></span><br></pre></td></tr></table></figure>
+<p>注意上面的代码，如果使用第一种JSON序列化的方法的话，是无法拷贝原型上的可枚举属性的。</p>
+<h2 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign()"></a>Object.assign()</h2><p><code>Object.assign()</code>方法用于将所有可枚举属性的值从一个或多个源对象（sources）复制到目标对象（target）。它将返回目标对象。这个方法我们平时经常会用到，它是浅拷贝。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> jan = &#123;<span class="attr">name</span>: <span class="string">'Jan'</span>, <span class="attr">age</span>: <span class="number">18</span>&#125;</span><br><span class="line"><span class="keyword">var</span> niko = &#123;<span class="attr">name</span>: <span class="string">'Niko'</span>&#125;</span><br><span class="line"><span class="keyword">var</span> o1 = &#123;<span class="attr">a</span>: jan, <span class="attr">b</span>: <span class="number">1</span>&#125;</span><br><span class="line"><span class="keyword">var</span> o2 = &#123;<span class="attr">a</span>: niko, <span class="attr">b</span>: <span class="number">2</span>, <span class="attr">c</span>: <span class="number">2</span>&#125;</span><br><span class="line"><span class="keyword">var</span> o = <span class="built_in">Object</span>.assign(&#123;&#125;, o1, o2) <span class="comment">// &#123;a: &#123;name: 'Niko'&#125;, b: 2, c: 2&#125;</span></span><br><span class="line">o.a.name = <span class="string">'Jan'</span></span><br><span class="line"><span class="built_in">console</span>.log(niko.name)  <span class="comment">// 'Jan'</span></span><br></pre></td></tr></table></figure>
+<p>从上面的代码也可以看出Object.assign是浅拷贝的，并且右边的源对象的属性会覆盖左边的源对象的属性，顺序是从右往左的。</p>
+<h2 id="jQuery-extend"><a href="#jQuery-extend" class="headerlink" title="jQuery.extend"></a>jQuery.extend</h2><p>jQuery实现了工具方法extend，这个方法传参和Object.assign类似，有两种用法，分别对应浅拷贝和深拷贝。浅拷贝<code>$.extend(target, object1 [,objectN])</code>，深拷贝<code>$.extend([deep], target, object1 [,objectN])</code>，当第一个参数传布尔值true时代表深拷贝。</p>
+<p>关于$.extend的实现，这里先占个坑，有时间分析一下。</p>
+<h2 id="lodash的深拷贝"><a href="#lodash的深拷贝" class="headerlink" title="lodash的深拷贝"></a>lodash的深拷贝</h2><p>lodash也提供了浅拷贝和深拷贝，分别是<code>_.clone()</code>和<code>_.cloneDeep()</code>。这里也先占个坑，以后有时间再分析。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"><i class="fa fa-tag"></i> JavaScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018-05-11/记一次小坑--关于window.open().html" rel="prev" title="记一次小坑--关于window.open()">
+      <i class="fa fa-chevron-left"></i> 记一次小坑--关于window.open()
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018-07-03/数组去重的几种方法.html" rel="next" title="数组去重的几种方法">
+      数组去重的几种方法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是深拷贝"><span class="nav-number">1.</span> <span class="nav-text">什么是深拷贝</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深拷贝的几种实现方法"><span class="nav-number">2.</span> <span class="nav-text">深拷贝的几种实现方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-使用JSON序列化操作实现深拷贝"><span class="nav-number">2.1.</span> <span class="nav-text">1. 使用JSON序列化操作实现深拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-利用for…in循环和递归实现深拷贝"><span class="nav-number">2.2.</span> <span class="nav-text">2. 利用for…in循环和递归实现深拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-assign"><span class="nav-number">2.3.</span> <span class="nav-text">Object.assign()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery-extend"><span class="nav-number">2.4.</span> <span class="nav-text">jQuery.extend</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lodash的深拷贝"><span class="nav-number">2.5.</span> <span class="nav-text">lodash的深拷贝</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nikolaus Liu"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Nikolaus Liu</p>
+  <div class="site-description" itemprop="description">Stay hungry,stay foolish.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/nikolausliu" title="GitHub → https://github.com/nikolausliu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn" rel="noopener" target="_blank">皖ICP备20004310号-1 </a>
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nikolaus Liu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '3207dfac3182b72bf5a3',
+      clientSecret: 'b92697f5e07512d3c58f486fb25041a11890b5f9',
+      repo        : 'nikolausliu.github.io',
+      owner       : 'nikolausliu',
+      admin       : ['nikolausliu'],
+      id          : 'f32048d348e2bff33330e0f259d762d4',
+        language: '',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
